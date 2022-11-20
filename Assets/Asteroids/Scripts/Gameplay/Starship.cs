@@ -1,20 +1,16 @@
-﻿using Asteroids.Scripts.Core.Interfaces;
-using Asteroids.Scripts.Gameplay.GameField;
+﻿using Asteroids.Scripts.Core;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay
 {
-    public class Starship : MonoBehaviour, IFieldObject
+    public class Starship : MonoBehaviour
     {
+        [SerializeField] private MovableSpaceObject movableSpaceObject;
+        [SerializeField] private SpaceEngine spaceEngine;
+
         private bool isMovePressed = false;
-        private Vector3 pointerPosition;
 
-        [SerializeField] private Vector3 velocity;
-
-        [SerializeField] private float damping = 0.99f;
-        [SerializeField] private float force = 0.5f;
-        [SerializeField] private float maxSpeed = 0.1f;
-        [SerializeField] private float rotationOffset = 90f;
+        public MovableSpaceObject MovableSpaceObject => movableSpaceObject;
 
         public void MovePressed(bool isPressed)
         {
@@ -23,7 +19,13 @@ namespace Asteroids.Scripts.Gameplay
 
         public void PointerPositionChanged(Vector3 lookAtPosition)
         {
-            pointerPosition = lookAtPosition;
+            spaceEngine.UpdatePointPosition(lookAtPosition);
+        }
+
+        private void Start()
+        {
+            movableSpaceObject.BindTransformPosition(transform);
+            spaceEngine = new SpaceEngine(movableSpaceObject, transform);
         }
 
         public void Fire()
@@ -37,41 +39,14 @@ namespace Asteroids.Scripts.Gameplay
         private void Update()
         {
             if (isMovePressed)
-                Move();
+                spaceEngine.Move(transform.up);
 
-            Rotate();
+            spaceEngine.LookAtPoint();
         }
 
         private void FixedUpdate()
         {
-            transform.position += velocity;
-
-            if (velocity.magnitude > maxSpeed)
-            {
-                velocity.Normalize();
-                velocity *= maxSpeed;
-            }
-
-            velocity *= damping;
-        }
-
-        private void Move()
-        {
-            velocity += transform.up * (Time.deltaTime * force);
-        }
-
-        private void Rotate()
-        {
-            var diff = pointerPosition - transform.position;
-            diff.Normalize();
-            float z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, z - rotationOffset);
-        }
-
-        public Vector2 Position
-        {
-            get => transform.position;
-            set => transform.position = value;
+            movableSpaceObject.PhysicUpdate();
         }
     }
 }

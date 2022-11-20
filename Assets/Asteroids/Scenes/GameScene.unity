@@ -614,11 +614,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5365dea51fd8432fba1213539d45f6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
-  damping: 0.99
-  force: 0.5
-  maxSpeed: 0.1
-  rotationOffset: 90
+  movableSpaceObject:
+    position: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
+    damping: 1
+    maxSpeed: 0.1
+  spaceEngine:
+    force: 0.1
+    rotationOffset: 90
 --- !u!212 &1915643166
 SpriteRenderer:
   m_ObjectHideFlags: 0

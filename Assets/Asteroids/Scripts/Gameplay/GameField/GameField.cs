@@ -13,7 +13,7 @@ namespace Asteroids.Scripts.Gameplay.GameField
         {
             var fieldBound = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
             fieldBorder = new FieldBorder(fieldBound);
-            fieldBorder.Add(starship);
+            fieldBorder.Add(starship.MovableSpaceObject);
             fieldBorder.Add(asteroid.SpaceObject);
         }
 
