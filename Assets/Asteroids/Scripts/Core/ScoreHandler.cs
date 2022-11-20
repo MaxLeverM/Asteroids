@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Gameplay
+namespace Asteroids.Scripts.Core
 {
     [Serializable]
     public class ScoreHandler

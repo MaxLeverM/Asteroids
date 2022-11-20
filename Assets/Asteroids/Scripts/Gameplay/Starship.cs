@@ -1,4 +1,5 @@
-﻿using Asteroids.Scripts.Gameplay.GameField;
+﻿using Asteroids.Scripts.Core.Interfaces;
+using Asteroids.Scripts.Gameplay.GameField;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay

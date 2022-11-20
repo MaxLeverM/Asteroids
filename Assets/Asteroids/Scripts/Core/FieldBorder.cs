@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Asteroids.Scripts.Core.Interfaces;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Gameplay.GameField
+namespace Asteroids.Scripts.Core
 {
     public class FieldBorder
     {

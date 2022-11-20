@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Asteroids.Scripts.Gameplay.GameField
+namespace Asteroids.Scripts.Core.Interfaces
 {
     public interface IFieldObject
     {
