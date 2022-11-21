@@ -1,20 +1,20 @@
 ﻿using Asteroids.Scripts.Core;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Gameplay.GameField
+namespace Asteroids.Scripts.Gameplay
 {
     public class GameField : MonoBehaviour
     {
         [SerializeField] private Starship starship;
-        [SerializeField] private Asteroid asteroid;
+        [SerializeField] private FieldBound fieldBound;
+        [SerializeField] private Spawner asteroidSpawner;
         private FieldBorder fieldBorder;
 
         private void Start()
         {
-            var fieldBound = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-            fieldBorder = new FieldBorder(fieldBound);
+            fieldBorder = new FieldBorder(fieldBound.ExtremePoint);
             fieldBorder.Add(starship.MovableSpaceObject);
-            fieldBorder.Add(asteroid.SpaceObject);
+            asteroidSpawner.Init(this, fieldBound.ExtremePoint, fieldBorder.Add, fieldBorder.Remove);
         }
 
         private void FixedUpdate()

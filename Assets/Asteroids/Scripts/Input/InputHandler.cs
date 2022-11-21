@@ -31,11 +31,27 @@ namespace Asteroids.Scripts.Input
         }
         public void OnFire(InputAction.CallbackContext context)
         {
-            Debug.Log("Fire!");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    starship.Fire(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    starship.Fire(false);
+                    break;
+            }
         }
         public void OnLaserFire(InputAction.CallbackContext context)
         {
-            Debug.Log("OnLaserFire!");
+            switch (context.phase)
+            {
+                case InputActionPhase.Started:
+                    starship.AdditionalFire(true);
+                    break;
+                case InputActionPhase.Canceled:
+                    starship.AdditionalFire(false);
+                    break;
+            }
         }
         public void OnRotate(InputAction.CallbackContext context)
         {

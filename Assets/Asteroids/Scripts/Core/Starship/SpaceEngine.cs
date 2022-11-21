@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Core
+namespace Asteroids.Scripts.Core.Starship
 {
     [Serializable]
     public class SpaceEngine
