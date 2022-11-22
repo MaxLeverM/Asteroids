@@ -59,6 +59,7 @@ MonoBehaviour:
     bulletPrefab: {fileID: 8000775437631574927, guid: f228d036b9b437b459af51fe4924ab75, type: 3}
     velocity: 0.2
     maxPoolCapacity: 40
+    rechargeTime: 0.25
 --- !u!212 &5870135538356494333
 SpriteRenderer:
   m_ObjectHideFlags: 0

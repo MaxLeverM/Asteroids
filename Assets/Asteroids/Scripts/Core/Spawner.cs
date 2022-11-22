@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Asteroids.Scripts.Core.Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -13,7 +14,7 @@ namespace Asteroids.Scripts.Core
         [SerializeField] private int startCapacity = 20;
         [SerializeField] private int maxCapacity = 30;
         [SerializeField] private Vector2 spawnInterval;
-        [SerializeField] private Vector2 velocityRange;
+        [SerializeField] private List<AsteroidSpawnData> asteroidSpawnDatas;
 
         private GameObjectPool gameObjectPool;
         private Vector2 fieldBound;
@@ -37,9 +38,24 @@ namespace Asteroids.Scripts.Core
             root.StartCoroutine(CycleSpawn());
         }
 
-        public void Spawn() //TODO Remove getcomponent, maybe make objectpool<IMovableObject>
+        private void Spawn()
         {
-            var movableObjectHolder = gameObjectPool.ObjectPool.Get().GetComponent<IMovableObjectHolder>();
+            if (asteroidSpawnDatas.Count < 1)
+                return;
+
+            var pointOnEdge = ProjectMath.RandomPointOutsideRectangle(fieldBound.x * 2, fieldBound.y * 2);
+            var spawnPosition = new Vector2(pointOnEdge.x - fieldBound.x, pointOnEdge.y - fieldBound.y);
+
+            var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            velocity *= Random.Range(asteroidSpawnDatas[0].VelocityRange.x, asteroidSpawnDatas[0].VelocityRange.y);
+
+            Spawn(spawnPosition, velocity, asteroidSpawnDatas[0].Scale);
+        }
+
+        private void Spawn(Vector2 spawnPoint, Vector2 velocity, Vector3 scale)
+        {
+            var spawnedObject = gameObjectPool.ObjectPool.Get().transform;
+            var movableObjectHolder = spawnedObject.GetComponent<IMovableObjectHolder>();
             var movableObject = movableObjectHolder.MovableObject;
 
             if (movableObjectHolder is IDestroyable destroyableObject)
@@ -47,19 +63,43 @@ namespace Asteroids.Scripts.Core
                 destroyableObject.DestroyCalled = DestroyCalled;
             }
 
-            var pointOnEdge = ProjectMath.RandomPointOutsideRectangle(fieldBound.x * 2, fieldBound.y * 2);
-            movableObject.Position = new Vector2(pointOnEdge.x - fieldBound.x, pointOnEdge.y - fieldBound.y);
-
-            movableObject.Velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-            movableObject.Velocity *= Random.Range(velocityRange.x, velocityRange.y);
+            spawnedObject.localScale = scale;
+            movableObject.Position = spawnPoint;
+            movableObject.Velocity = velocity;
 
             objectSpawned?.Invoke(movableObject);
         }
 
-        public void DestroyCalled(GameObject gameObjectForDestroy)
+        private void DestroyCalled(GameObject gameObjectForDestroy)
         {
             gameObjectPool.ObjectPool.Release(gameObjectForDestroy);
             objectDestroyed?.Invoke(gameObjectForDestroy.GetComponent<IMovableObjectHolder>().MovableObject);
+
+            DivideObject(gameObjectForDestroy.transform);
+        }
+
+        private void DivideObject(Transform originObject)
+        {
+            if (asteroidSpawnDatas.Count < 2)
+                return;
+            for (int i = 0; i < asteroidSpawnDatas.Count; i++)
+            {
+                if (originObject.localScale.magnitude >= asteroidSpawnDatas[i].Scale.magnitude)
+                {
+                    SpawnFragments(i+1, originObject);
+                    break;
+                }
+            }
+        }
+
+        private void SpawnFragments(int index, Transform originTransform)
+        {
+            for (int i = 0; i < asteroidSpawnDatas[index-1].PartsCount; i++)
+            {
+                var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                velocity *= Random.Range(asteroidSpawnDatas[index].VelocityRange.x, asteroidSpawnDatas[index].VelocityRange.y);
+                Spawn(originTransform.position, velocity, asteroidSpawnDatas[index].Scale);
+            }
         }
 
         private IEnumerator CycleSpawn()
