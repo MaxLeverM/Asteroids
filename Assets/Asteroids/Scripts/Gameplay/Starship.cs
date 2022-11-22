@@ -13,7 +13,7 @@ namespace Asteroids.Scripts.Gameplay
         [SerializeField] private LaserGun additionalGun;
 
         public IGun MainGun => mainGun;
-        public IGun AdditionalGun => additionalGun;
+        public LaserGun AdditionalGun => additionalGun;
 
         private bool isMovePressed = false;
 
@@ -24,6 +24,7 @@ namespace Asteroids.Scripts.Gameplay
             movableSpaceObject.BindTransformPosition(transform);
             spaceEngine = new SpaceEngine(movableSpaceObject, transform); //TODO Inspector data rewrited, fix this
             mainGun.Init(transform);
+            additionalGun.Init(transform);
         }
 
         private void Update()
@@ -39,6 +40,7 @@ namespace Asteroids.Scripts.Gameplay
         private void FixedUpdate()
         {
             movableSpaceObject.PhysicUpdate();
+            additionalGun.FixedUpdate();
         }
 
         public void MovePressed(bool isPressed) => isMovePressed = isPressed;

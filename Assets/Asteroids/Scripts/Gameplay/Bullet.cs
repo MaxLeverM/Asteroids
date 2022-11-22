@@ -13,6 +13,7 @@ namespace Asteroids.Scripts.Gameplay
         [SerializeField] private float timeToDestroy = 1f;
         
         public Action<GameObject> DestroyCalled { get; set; }
+
         public MovableSpaceObject MovableObject => spaceObject;
 
 
@@ -42,6 +43,11 @@ namespace Asteroids.Scripts.Gameplay
         private IEnumerator SelfDestructionTimer()
         {
             yield return new WaitForSeconds(timeToDestroy);
+            DestroyCalled?.Invoke(gameObject);
+        }
+
+        public void CallDestroy()
+        {
             DestroyCalled?.Invoke(gameObject);
         }
     }
