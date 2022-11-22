@@ -12,7 +12,7 @@ namespace Asteroids.Scripts.Core.Starship
         private Transform transform;
         private Vector3 pointPosition;
 
-        public SpaceEngine(MovableSpaceObject movableObject, Transform objectTransform)
+        public void Init(MovableSpaceObject movableObject, Transform objectTransform)
         {
             movableSpaceObject = movableObject;
             transform = objectTransform;

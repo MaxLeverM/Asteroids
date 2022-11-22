@@ -41,7 +41,8 @@ namespace Asteroids.Scripts.Core.Starship
 
         private void SpawnBullet()
         {
-            var movableObjectHolder = gameObjectPool.ObjectPool.Get().GetComponent<IMovableObjectHolder>();
+            var bulletObject = gameObjectPool.ObjectPool.Get();
+            var movableObjectHolder = bulletObject.GetComponent<IMovableObjectHolder>();
             var movableObject = movableObjectHolder.MovableObject;
             if (movableObjectHolder is IDestroyable destroyableObject)
             {
@@ -50,6 +51,7 @@ namespace Asteroids.Scripts.Core.Starship
 
             movableObject.Position = holder.position;
             movableObject.Velocity = holder.up * velocity;
+
             objectSpawned?.Invoke(movableObject);
         }
 

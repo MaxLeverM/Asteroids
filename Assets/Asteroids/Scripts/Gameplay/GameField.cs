@@ -8,6 +8,7 @@ namespace Asteroids.Scripts.Gameplay
         [SerializeField] private Starship starship;
         [SerializeField] private FieldBound fieldBound;
         [SerializeField] private Spawner asteroidSpawner;
+        [SerializeField] private UfoSpawner ufoSpawner;
         private FieldBorder fieldBorder;
 
         private void Start()
@@ -15,6 +16,7 @@ namespace Asteroids.Scripts.Gameplay
             fieldBorder = new FieldBorder(fieldBound.ExtremePoint);
             fieldBorder.Add(starship.MovableSpaceObject);
             asteroidSpawner.Init(this, fieldBound.ExtremePoint, fieldBorder.Add, fieldBorder.Remove);
+            ufoSpawner.Init(this, starship.transform, fieldBound.ExtremePoint, fieldBorder.Add, fieldBorder.Remove);
         }
 
         private void FixedUpdate()

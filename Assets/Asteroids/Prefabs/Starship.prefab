@@ -54,7 +54,7 @@ MonoBehaviour:
     damping: 1
     maxSpeed: 0.1
   spaceEngine:
-    force: 0.1
+    force: 0.3
     rotationOffset: 90
   mainGun:
     bulletPrefab: {fileID: 8000775437631574927, guid: f228d036b9b437b459af51fe4924ab75, type: 3}
@@ -63,7 +63,6 @@ MonoBehaviour:
     rechargeTime: 0.2
   additionalGun:
     shotDuration: 1
-    shotRollbackTime: 1
     rechargeTime: 10
     maxShotCount: 3
     shotCount: 3

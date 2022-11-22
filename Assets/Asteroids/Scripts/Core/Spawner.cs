@@ -22,8 +22,7 @@ namespace Asteroids.Scripts.Core
         private Action<IFieldObject> objectSpawned;
         private Action<IFieldObject> objectDestroyed;
 
-        public void Init(MonoBehaviour root, Vector2 fieldBound, Action<IFieldObject> objectSpawned,
-            Action<IFieldObject> objectDestroyed)
+        public void Init(MonoBehaviour root, Vector2 fieldBound, Action<IFieldObject> objectSpawned, Action<IFieldObject> objectDestroyed)
         {
             gameObjectPool = new GameObjectPool(prefabForSpawn, root.transform, startCapacity, maxCapacity);
             this.objectSpawned = objectSpawned;
@@ -86,7 +85,7 @@ namespace Asteroids.Scripts.Core
             {
                 if (originObject.localScale.magnitude >= asteroidSpawnDatas[i].Scale.magnitude)
                 {
-                    SpawnFragments(i+1, originObject);
+                    SpawnFragments(i + 1, originObject);
                     break;
                 }
             }
@@ -94,10 +93,11 @@ namespace Asteroids.Scripts.Core
 
         private void SpawnFragments(int index, Transform originTransform)
         {
-            for (int i = 0; i < asteroidSpawnDatas[index-1].PartsCount; i++)
+            for (int i = 0; i < asteroidSpawnDatas[index - 1].PartsCount; i++)
             {
                 var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                velocity *= Random.Range(asteroidSpawnDatas[index].VelocityRange.x, asteroidSpawnDatas[index].VelocityRange.y);
+                velocity *= Random.Range(asteroidSpawnDatas[index].VelocityRange.x,
+                    asteroidSpawnDatas[index].VelocityRange.y);
                 Spawn(originTransform.position, velocity, asteroidSpawnDatas[index].Scale);
             }
         }
@@ -109,6 +109,13 @@ namespace Asteroids.Scripts.Core
                 yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
                 if (gameObjectPool.ObjectPool.CountActive < maxCapacity)
                     Spawn();
+                if (gameObjectPool.ObjectPool.CountActive == 1)
+                {
+                    for (int i = 0; i < startCapacity - 1; i++)
+                    {
+                        Spawn();
+                    }
+                }
             }
         }
     }

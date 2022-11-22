@@ -22,7 +22,7 @@ namespace Asteroids.Scripts.Gameplay
         private void Start()
         {
             movableSpaceObject.BindTransformPosition(transform);
-            spaceEngine = new SpaceEngine(movableSpaceObject, transform); //TODO Inspector data rewrited, fix this
+            spaceEngine.Init(movableSpaceObject, transform);
             mainGun.Init(transform);
             additionalGun.Init(transform);
         }

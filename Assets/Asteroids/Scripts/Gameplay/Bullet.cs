@@ -11,7 +11,7 @@ namespace Asteroids.Scripts.Gameplay
         [SerializeField] private MovableSpaceObject spaceObject;
         [SerializeField] private string destroyerTag;
         [SerializeField] private float timeToDestroy = 1f;
-        
+
         public Action<GameObject> DestroyCalled { get; set; }
 
         public MovableSpaceObject MovableObject => spaceObject;
@@ -37,6 +37,10 @@ namespace Asteroids.Scripts.Gameplay
             if (other.CompareTag(destroyerTag))
             {
                 DestroyCalled?.Invoke(gameObject);
+                if (other.TryGetComponent(out IDestroyable destroyableObject))
+                {
+                    destroyableObject.CallDestroy();
+                }
             }
         }
 

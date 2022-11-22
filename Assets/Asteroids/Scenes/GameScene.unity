@@ -469,8 +469,8 @@ MonoBehaviour:
     offset: {x: 0.5, y: 0.5}
   asteroidSpawner:
     prefabForSpawn: {fileID: 2864256910170742062, guid: a05ba2d2002e204498e9a0f6ae0d0e5c, type: 3}
-    startCapacity: 10
-    maxCapacity: 15
+    startCapacity: 8
+    maxCapacity: 30
     spawnInterval: {x: 2, y: 10}
     asteroidSpawnDatas:
     - scale: {x: 0.5, y: 0.5, z: 0.5}
@@ -479,6 +479,11 @@ MonoBehaviour:
     - scale: {x: 0.25, y: 0.25, z: 0.25}
       partsCount: 0
       velocityRange: {x: 0.08, y: 0.13}
+  ufoSpawner:
+    prefabForSpawn: {fileID: 6748213113789152209, guid: c60b312a6f970da49b7bfd02ba88dd99, type: 3}
+    startCapacity: 1
+    maxCapacity: 3
+    spawnInterval: {x: 10, y: 20}
 --- !u!114 &1915643165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5870135538356494334, guid: aaaeb6f0b4878d84d824ec4b07a847b7, type: 3}

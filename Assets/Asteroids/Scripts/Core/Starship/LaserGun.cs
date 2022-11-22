@@ -15,7 +15,7 @@ namespace Asteroids.Scripts.Core.Starship
         [SerializeField] private LayerMask layerMask;
 
         private float currentShotDuration;
-       [SerializeField] private float currentRechargeTime;
+        private float currentRechargeTime;
 
         private bool isShotActive;
         private Transform holder;
