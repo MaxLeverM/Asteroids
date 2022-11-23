@@ -118,11 +118,13 @@ MonoBehaviour:
   spaceObject:
     position: {x: 0, y: 0}
     velocity: {x: 0, y: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
     damping: 1
     maxSpeed: 0.06
   spaceEngine:
     force: 0.08
     rotationOffset: 90
+  rewardForDestroy: 1000
 --- !u!50 &-2672507028778704970
 Rigidbody2D:
   serializedVersion: 4

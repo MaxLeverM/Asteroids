@@ -6,14 +6,15 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay
 {
-    public class Bullet : MonoBehaviour, IMovableObjectHolder, IDestroyable
+    public class Bullet : MonoBehaviour, IMovableObjectHolder, IDestroyable, IScorer
     {
         [SerializeField] private MovableSpaceObject spaceObject;
         [SerializeField] private string destroyerTag;
         [SerializeField] private float timeToDestroy = 1f;
-
+        
         public Action<GameObject> DestroyCalled { get; set; }
-
+        public Action<int> OnPointsAwarded { get; set; }
+        
         public MovableSpaceObject MovableObject => spaceObject;
 
 
@@ -36,9 +37,13 @@ namespace Asteroids.Scripts.Gameplay
         {
             if (other.CompareTag(destroyerTag))
             {
-                DestroyCalled?.Invoke(gameObject);
+                CallDestroy();
                 if (other.TryGetComponent(out IDestroyable destroyableObject))
                 {
+                    if (destroyableObject is IRewardPoints rewardPoints)
+                    {
+                        OnPointsAwarded?.Invoke(rewardPoints.Score);
+                    }
                     destroyableObject.CallDestroy();
                 }
             }
@@ -47,7 +52,7 @@ namespace Asteroids.Scripts.Gameplay
         private IEnumerator SelfDestructionTimer()
         {
             yield return new WaitForSeconds(timeToDestroy);
-            DestroyCalled?.Invoke(gameObject);
+            CallDestroy();
         }
 
         public void CallDestroy()

@@ -8,9 +8,9 @@ namespace Asteroids.Scripts.Input
     public class InputHandler : MonoBehaviour
     {
         [SerializeField] private Starship starship;
-        
+
         private Camera mainCamera;
-        
+
         private void Awake()
         {
             mainCamera = Camera.main;
@@ -29,6 +29,7 @@ namespace Asteroids.Scripts.Input
                     break;
             }
         }
+
         public void OnFire(InputAction.CallbackContext context)
         {
             switch (context.phase)
@@ -41,6 +42,7 @@ namespace Asteroids.Scripts.Input
                     break;
             }
         }
+
         public void OnLaserFire(InputAction.CallbackContext context)
         {
             switch (context.phase)
@@ -53,9 +55,11 @@ namespace Asteroids.Scripts.Input
                     break;
             }
         }
+
         public void OnRotate(InputAction.CallbackContext context)
         {
-            starship.PointerPositionChanged(mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>()));
+            if (mainCamera != null)
+                starship.PointerPositionChanged(mainCamera.ScreenToWorldPoint(context.ReadValue<Vector2>()));
         }
     }
 }

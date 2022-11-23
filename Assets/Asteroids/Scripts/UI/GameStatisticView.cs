@@ -14,20 +14,28 @@ namespace Asteroids.Scripts.UI
         [SerializeField] private TextPatternDrawer rechargeTimeDrawer;
 
         [SerializeField] private Starship starship;
+        [SerializeField] private Player player;
 
         private void Start()
         {
+            OnScoreValueChanged(player.ScoreHandler.Score);
             OnShotCountChanged(starship.AdditionalGun.ShotCount);
             OnRechargeTimeChanged(starship.AdditionalGun.RechargeTime);
             OnPositionUpdate(starship.MovableSpaceObject.Position);
             OnRotationUpdate(starship.MovableSpaceObject.Rotation);
             OnVelocityUpdate(starship.MovableSpaceObject.Velocity);
 
+            player.ScoreHandler.OnScoreValueChanged += OnScoreValueChanged;
             starship.AdditionalGun.OnShotCountChanged += OnShotCountChanged;
             starship.AdditionalGun.OnRechargeTimeChanged += OnRechargeTimeChanged;
             starship.MovableSpaceObject.OnPositionUpdate += OnPositionUpdate;
             starship.MovableSpaceObject.OnRotationUpdate += OnRotationUpdate;
             starship.MovableSpaceObject.OnVelocityUpdate += OnVelocityUpdate;
+        }
+
+        private void OnScoreValueChanged(int score)
+        {
+            scoreDrawer.Draw(score);
         }
 
         private void OnShotCountChanged(int currentShotsCount)

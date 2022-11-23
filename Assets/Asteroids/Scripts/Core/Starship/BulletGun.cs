@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Asteroids.Scripts.Core.Starship
 {
     [Serializable]
-    public class BulletGun : IGun
+    public class BulletGun : IGun, IScorer
     {
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private float velocity = 0.2f;
@@ -20,6 +20,8 @@ namespace Asteroids.Scripts.Core.Starship
 
         public Action<IFieldObject> objectSpawned;
         public Action<IFieldObject> objectDestroyed;
+        public Action<int> OnPointsAwarded { get; set; }
+
 
         public void Init(Transform holderTransform)
         {
@@ -49,6 +51,11 @@ namespace Asteroids.Scripts.Core.Starship
                 destroyableObject.DestroyCalled = DestroyCalled;
             }
 
+            if (movableObjectHolder is IScorer scorer)
+            {
+                scorer.OnPointsAwarded = OnPointsAwarded;
+            }
+
             movableObject.Position = holder.position;
             movableObject.Velocity = holder.up * velocity;
 
@@ -71,6 +78,7 @@ namespace Asteroids.Scripts.Core.Starship
         public void DestroyCalled(GameObject gameObjectForDestroy)
         {
             gameObjectPool.ObjectPool.Release(gameObjectForDestroy);
+            
             objectDestroyed?.Invoke(gameObjectForDestroy.GetComponent<IMovableObjectHolder>().MovableObject);
         }
     }

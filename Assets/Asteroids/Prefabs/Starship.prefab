@@ -51,6 +51,7 @@ MonoBehaviour:
   movableSpaceObject:
     position: {x: 0, y: 0}
     velocity: {x: 0, y: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
     damping: 1
     maxSpeed: 0.1
   spaceEngine:
@@ -70,6 +71,7 @@ MonoBehaviour:
     layerMask:
       serializedVersion: 2
       m_Bits: 64
+  enemyTag: Enemy
 --- !u!212 &5870135538356494333
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreHandler:
     score: 0
+  starship: {fileID: 5870135538356494334}
 --- !u!58 &7709126787694990114
 CircleCollider2D:
   m_ObjectHideFlags: 0

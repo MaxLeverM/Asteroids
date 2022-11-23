@@ -6,13 +6,14 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay
 {
-    public class UFO : MonoBehaviour, IMovableObjectHolder, IDestroyable, IEnemyAI
+    public class UFO : MonoBehaviour, IMovableObjectHolder, IDestroyable, IEnemyAI, IRewardPoints
     {
         [SerializeField] private MovableSpaceObject spaceObject;
         [SerializeField] private SpaceEngine spaceEngine;
-
+        [SerializeField] private int rewardForDestroy;
         private UfoEnemyAI ufoEnemyAI;
 
+        public int Score { get=>rewardForDestroy; set=>rewardForDestroy = value; }
         public Action<GameObject> DestroyCalled { get; set; }
         public MovableSpaceObject MovableObject => spaceObject;
 

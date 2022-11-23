@@ -48,10 +48,10 @@ namespace Asteroids.Scripts.Core
             var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             velocity *= Random.Range(asteroidSpawnDatas[0].VelocityRange.x, asteroidSpawnDatas[0].VelocityRange.y);
 
-            Spawn(spawnPosition, velocity, asteroidSpawnDatas[0].Scale);
+            Spawn(spawnPosition, velocity, asteroidSpawnDatas[0].Scale, asteroidSpawnDatas[0].ScoreForDestroy);
         }
 
-        private void Spawn(Vector2 spawnPoint, Vector2 velocity, Vector3 scale)
+        private void Spawn(Vector2 spawnPoint, Vector2 velocity, Vector3 scale, int score)
         {
             var spawnedObject = gameObjectPool.ObjectPool.Get().transform;
             var movableObjectHolder = spawnedObject.GetComponent<IMovableObjectHolder>();
@@ -60,6 +60,11 @@ namespace Asteroids.Scripts.Core
             if (movableObjectHolder is IDestroyable destroyableObject)
             {
                 destroyableObject.DestroyCalled = DestroyCalled;
+            }
+
+            if (movableObjectHolder is IRewardPoints rewardPoints)
+            {
+                rewardPoints.Score = score;
             }
 
             spawnedObject.localScale = scale;
@@ -98,7 +103,7 @@ namespace Asteroids.Scripts.Core
                 var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 velocity *= Random.Range(asteroidSpawnDatas[index].VelocityRange.x,
                     asteroidSpawnDatas[index].VelocityRange.y);
-                Spawn(originTransform.position, velocity, asteroidSpawnDatas[index].Scale);
+                Spawn(originTransform.position, velocity, asteroidSpawnDatas[index].Scale, asteroidSpawnDatas[index].ScoreForDestroy);
             }
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Asteroids.Scripts.Core.Starship
 {
     [Serializable]
-    public class LaserGun : IGun
+    public class LaserGun : IGun, IScorer
     {
         [SerializeField] private float shotDuration = 1f;
         [SerializeField] private float rechargeTime = 10f;
@@ -30,6 +30,7 @@ namespace Asteroids.Scripts.Core.Starship
                 OnShotStatusChanged?.Invoke(isShotActive);
             }
         }
+
         public int ShotCount
         {
             get => shotCount;
@@ -39,6 +40,7 @@ namespace Asteroids.Scripts.Core.Starship
                 OnShotCountChanged?.Invoke(shotCount);
             }
         }
+
         public float CurrentRechargeTime
         {
             get => currentRechargeTime;
@@ -48,6 +50,7 @@ namespace Asteroids.Scripts.Core.Starship
                 OnRechargeTimeChanged?.Invoke(currentRechargeTime);
             }
         }
+        
         public float Distance => (laserHit.distance <= 0) ? laserDistance : laserHit.distance;
         public float RechargeTime => rechargeTime;
         public int MaxShotCount => maxShotCount;
@@ -55,6 +58,8 @@ namespace Asteroids.Scripts.Core.Starship
         public Action<bool> OnShotStatusChanged;
         public Action<int> OnShotCountChanged;
         public Action<float> OnRechargeTimeChanged;
+        public Action<int> OnPointsAwarded { get; set; }
+
 
         public void Init(Transform holderTransform)
         {
@@ -86,6 +91,11 @@ namespace Asteroids.Scripts.Core.Starship
             if (laserHit.transform != null && laserHit.transform.TryGetComponent(out IDestroyable destroyableEnemy))
             {
                 destroyableEnemy?.CallDestroy();
+                
+                if (destroyableEnemy is IRewardPoints rewardPoints)
+                {
+                    OnPointsAwarded?.Invoke(rewardPoints.Score);
+                }
             }
 
             currentShotDuration += Time.fixedDeltaTime;

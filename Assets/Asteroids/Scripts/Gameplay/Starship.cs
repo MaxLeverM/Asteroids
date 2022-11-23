@@ -1,25 +1,35 @@
-﻿using Asteroids.Scripts.Core;
+﻿using System;
+using Asteroids.Scripts.Core;
 using Asteroids.Scripts.Core.Interfaces;
 using Asteroids.Scripts.Core.Starship;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay
 {
-    public class Starship : MonoBehaviour
+    public class Starship : MonoBehaviour, IScorer, IDestroyable
     {
         [SerializeField] private MovableSpaceObject movableSpaceObject;
         [SerializeField] private SpaceEngine spaceEngine;
         [SerializeField] private BulletGun mainGun;
         [SerializeField] private LaserGun additionalGun;
+        [SerializeField] private string enemyTag;
+
+        private bool isMovePressed;
+        private bool isDestroyed;
 
         public IGun MainGun => mainGun;
         public LaserGun AdditionalGun => additionalGun;
-
-        private bool isMovePressed = false;
-
         public MovableSpaceObject MovableSpaceObject => movableSpaceObject;
+        public Action<int> OnPointsAwarded { get; set; }
+        public Action<GameObject> DestroyCalled { get; set; }
 
         private void Start()
+        {
+            Initialize();
+            Subscribes();
+        }
+
+        private void Initialize()
         {
             movableSpaceObject.BindTransform(transform);
             spaceEngine.Init(movableSpaceObject, transform);
@@ -27,8 +37,19 @@ namespace Asteroids.Scripts.Gameplay
             additionalGun.Init(transform);
         }
 
+        private void Subscribes()
+        {
+            if (mainGun is IScorer scorer)
+                scorer.OnPointsAwarded = OnPointsAwarded;
+            if (additionalGun is IScorer additionalGunScorer)
+                additionalGunScorer.OnPointsAwarded = OnPointsAwarded;
+        }
+
         private void Update()
         {
+            if(isDestroyed)
+                return;
+            
             if (isMovePressed)
                 spaceEngine.Move(transform.up);
 
@@ -39,6 +60,9 @@ namespace Asteroids.Scripts.Gameplay
 
         private void FixedUpdate()
         {
+            if(isDestroyed)
+                return;
+            
             movableSpaceObject.PhysicUpdate();
             additionalGun.FixedUpdate();
         }
@@ -47,8 +71,33 @@ namespace Asteroids.Scripts.Gameplay
 
         public void PointerPositionChanged(Vector3 lookAtPosition) => spaceEngine.UpdatePointPosition(lookAtPosition);
 
-        public void Fire(bool isActive) => mainGun.Fire(isActive);
+        public void Fire(bool isActive)
+        {
+            if(isDestroyed)
+                return;
+            mainGun.Fire(isActive);
+        }
 
-        public void AdditionalFire(bool isActive) => additionalGun.Fire(isActive);
+        public void AdditionalFire(bool isActive)
+        {
+            if(isDestroyed)
+                return;
+            additionalGun.Fire(isActive);
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag(enemyTag))
+            {
+                CallDestroy();
+            }
+        }
+
+        public void CallDestroy()
+        {
+            isDestroyed = true;
+            DestroyCalled?.Invoke(gameObject);
+        }
     }
 }
