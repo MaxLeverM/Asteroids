@@ -9,25 +9,47 @@ namespace Asteroids.Scripts.Core
     {
         [SerializeField] private Vector2 position;
         [SerializeField] private Vector2 velocity;
+        [SerializeField] private Quaternion rotation;
         [SerializeField] private float damping = 1f;
         [SerializeField] private float maxSpeed = 0.1f;
         private Transform transform;
 
+        public Action<Vector2> OnPositionUpdate;
+        public Action<Quaternion> OnRotationUpdate;
+        public Action<Vector2> OnVelocityUpdate;
+
         public Vector2 Position
         {
-            get => position;
+            get => position; //TODO potential risk that anybody change transform directly.
             set
             {
                 position = value;
+                OnPositionUpdate?.Invoke(position);
                 if (transform != null)
                     transform.position = position;
+            }
+        }
+
+        public Quaternion Rotation
+        {
+            get => rotation;
+            set
+            {
+                rotation = value;
+                OnRotationUpdate?.Invoke(rotation);
+                if(transform!=null)
+                    transform.rotation = rotation;
             }
         }
 
         public Vector2 Velocity
         {
             get => velocity;
-            set => velocity = value;
+            set
+            {
+                velocity = value;
+                OnVelocityUpdate?.Invoke(velocity);
+            }
         }
 
         public void PhysicUpdate()
@@ -40,10 +62,10 @@ namespace Asteroids.Scripts.Core
                 velocity *= maxSpeed;
             }
 
-            velocity *= damping;
+            Velocity *= damping;
         }
 
-        public void BindTransformPosition(Transform transformToBind)
+        public void BindTransform(Transform transformToBind)
         {
             transform = transformToBind;
         }

@@ -21,7 +21,7 @@ namespace Asteroids.Scripts.Gameplay
 
         private void Start()
         {
-            movableSpaceObject.BindTransformPosition(transform);
+            movableSpaceObject.BindTransform(transform);
             spaceEngine.Init(movableSpaceObject, transform);
             mainGun.Init(transform);
             additionalGun.Init(transform);

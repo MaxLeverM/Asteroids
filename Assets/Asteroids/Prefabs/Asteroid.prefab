@@ -104,7 +104,6 @@ MonoBehaviour:
     velocity: {x: 0, y: 0}
     damping: 1
     maxSpeed: 0.1
-  destroyerTag: PlayerBullet
 --- !u!58 &2659354237369315585
 CircleCollider2D:
   m_ObjectHideFlags: 0

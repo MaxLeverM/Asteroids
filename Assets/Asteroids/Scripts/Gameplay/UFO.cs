@@ -19,7 +19,7 @@ namespace Asteroids.Scripts.Gameplay
 
         private void Start()
         {
-            spaceObject.BindTransformPosition(transform);
+            spaceObject.BindTransform(transform);
             spaceEngine.Init(spaceObject, transform);
         }
 

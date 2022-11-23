@@ -29,7 +29,7 @@ namespace Asteroids.Scripts.Core.Starship
             var diff = pointPosition - transform.position;
             diff.Normalize();
             float z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, z - rotationOffset);
+            movableSpaceObject.Rotation = Quaternion.Euler(0f, 0f, z - rotationOffset);
         }
 
         public void UpdatePointPosition(Vector2 position)
