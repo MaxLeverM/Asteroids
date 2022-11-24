@@ -22,10 +22,12 @@ namespace Asteroids.Scripts.Core.Starship
         public Action<IFieldObject> objectDestroyed;
         public Action<int> OnPointsAwarded { get; set; }
 
+        private readonly Vector3 bulletContainerOffset = new Vector3(-10, 0, 0);
 
         public void Init(Transform holderTransform)
         {
             bulletContainer = new GameObject("BulletContainer");
+            bulletContainer.transform.position = bulletContainerOffset;
             gameObjectPool = new GameObjectPool(bulletPrefab, bulletContainer.transform, maxPoolCapacity / 2,
                 maxPoolCapacity);
             holder = holderTransform;

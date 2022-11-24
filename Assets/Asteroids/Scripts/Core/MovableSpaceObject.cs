@@ -20,7 +20,7 @@ namespace Asteroids.Scripts.Core
 
         public Vector2 Position
         {
-            get => position; //TODO potential risk that anybody change transform directly.
+            get => position;
             set
             {
                 position = value;

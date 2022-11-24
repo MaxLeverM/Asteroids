@@ -26,7 +26,7 @@ namespace Asteroids.Scripts.UI
             canvasGroup.Active(true);
         }
 
-        private void ReloadScene()
+        private void ReloadScene() //TODO: temporary solution, make SceneLoader service
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
