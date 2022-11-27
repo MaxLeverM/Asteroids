@@ -14,7 +14,7 @@ namespace Asteroids.Scripts.Core
         [SerializeField] private int startCapacity = 20;
         [SerializeField] private int maxCapacity = 30;
         [SerializeField] private Vector2 spawnInterval;
-        [SerializeField] private List<AsteroidSpawnData> asteroidSpawnDatas;
+        [SerializeField] private List<AsteroidSpawnData> asteroidSpawnData;
 
         private GameObjectPool gameObjectPool;
         private Vector2 fieldBound;
@@ -39,16 +39,16 @@ namespace Asteroids.Scripts.Core
 
         private void Spawn()
         {
-            if (asteroidSpawnDatas.Count < 1)
+            if (asteroidSpawnData.Count < 1)
                 return;
 
             var pointOnEdge = ProjectMath.RandomPointOutsideRectangle(fieldBound.x * 2, fieldBound.y * 2);
             var spawnPosition = new Vector2(pointOnEdge.x - fieldBound.x, pointOnEdge.y - fieldBound.y);
 
             var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-            velocity *= Random.Range(asteroidSpawnDatas[0].VelocityRange.x, asteroidSpawnDatas[0].VelocityRange.y);
+            velocity *= Random.Range(asteroidSpawnData[0].VelocityRange.x, asteroidSpawnData[0].VelocityRange.y);
 
-            Spawn(spawnPosition, velocity, asteroidSpawnDatas[0].Scale, asteroidSpawnDatas[0].ScoreForDestroy);
+            Spawn(spawnPosition, velocity, asteroidSpawnData[0].Scale, asteroidSpawnData[0].ScoreForDestroy);
         }
 
         private void Spawn(Vector2 spawnPoint, Vector2 velocity, Vector3 scale, int score)
@@ -84,11 +84,11 @@ namespace Asteroids.Scripts.Core
 
         private void DivideObject(Transform originObject)
         {
-            if (asteroidSpawnDatas.Count < 2)
+            if (asteroidSpawnData.Count < 2)
                 return;
-            for (int i = 0; i < asteroidSpawnDatas.Count; i++)
+            for (int i = 0; i < asteroidSpawnData.Count; i++)
             {
-                if (originObject.localScale.magnitude >= asteroidSpawnDatas[i].Scale.magnitude)
+                if (originObject.localScale.magnitude >= asteroidSpawnData[i].Scale.magnitude)
                 {
                     SpawnFragments(i + 1, originObject);
                     break;
@@ -98,12 +98,12 @@ namespace Asteroids.Scripts.Core
 
         private void SpawnFragments(int index, Transform originTransform)
         {
-            for (int i = 0; i < asteroidSpawnDatas[index - 1].PartsCount; i++)
+            for (int i = 0; i < asteroidSpawnData[index - 1].PartsCount; i++)
             {
                 var velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                velocity *= Random.Range(asteroidSpawnDatas[index].VelocityRange.x,
-                    asteroidSpawnDatas[index].VelocityRange.y);
-                Spawn(originTransform.position, velocity, asteroidSpawnDatas[index].Scale, asteroidSpawnDatas[index].ScoreForDestroy);
+                velocity *= Random.Range(asteroidSpawnData[index].VelocityRange.x,
+                    asteroidSpawnData[index].VelocityRange.y);
+                Spawn(originTransform.position, velocity, asteroidSpawnData[index].Scale, asteroidSpawnData[index].ScoreForDestroy);
             }
         }
 

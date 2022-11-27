@@ -102,6 +102,7 @@ MonoBehaviour:
   spaceObject:
     position: {x: 0, y: 0}
     velocity: {x: 0, y: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
     damping: 1
     maxSpeed: 0.1
 --- !u!58 &2659354237369315585

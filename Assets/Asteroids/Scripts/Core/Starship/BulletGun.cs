@@ -17,9 +17,7 @@ namespace Asteroids.Scripts.Core.Starship
         private Transform holder;
         private float currentRechargeTime;
         private bool isFireActive;
-
-        public Action<IFieldObject> objectSpawned;
-        public Action<IFieldObject> objectDestroyed;
+        
         public Action<int> OnPointsAwarded { get; set; }
 
         private readonly Vector3 bulletContainerOffset = new Vector3(-10, 0, 0);
@@ -60,8 +58,6 @@ namespace Asteroids.Scripts.Core.Starship
 
             movableObject.Position = holder.position;
             movableObject.Velocity = holder.up * velocity;
-
-            objectSpawned?.Invoke(movableObject);
         }
 
         public void Update()
@@ -80,8 +76,6 @@ namespace Asteroids.Scripts.Core.Starship
         public void DestroyCalled(GameObject gameObjectForDestroy)
         {
             gameObjectPool.ObjectPool.Release(gameObjectForDestroy);
-            
-            objectDestroyed?.Invoke(gameObjectForDestroy.GetComponent<IMovableObjectHolder>().MovableObject);
         }
     }
 }

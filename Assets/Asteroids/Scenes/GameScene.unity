@@ -1194,7 +1194,7 @@ MonoBehaviour:
     startCapacity: 8
     maxCapacity: 30
     spawnInterval: {x: 2, y: 10}
-    asteroidSpawnDatas:
+    asteroidSpawnData:
     - scale: {x: 0.5, y: 0.5, z: 0.5}
       partsCount: 3
       velocityRange: {x: 0.05, y: 0.1}
