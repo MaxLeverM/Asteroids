@@ -12,12 +12,13 @@ namespace Asteroids.Scripts.UI
         [SerializeField] private TextPatternDrawer shipVelocityDrawer;
         [SerializeField] private TextPatternDrawer laserShotsDrawer;
         [SerializeField] private TextPatternDrawer rechargeTimeDrawer;
-
-        [SerializeField] private Starship starship;
-        [SerializeField] private Player player;
-
-        private void Start()
+        
+        private Starship starship;
+        
+        public void Init(Player player, Starship starship)
         {
+            this.starship = starship;
+            
             OnScoreValueChanged(player.ScoreHandler.Score);
             OnShotCountChanged(starship.AdditionalGun.ShotCount);
             OnRechargeTimeChanged(starship.AdditionalGun.RechargeTime);

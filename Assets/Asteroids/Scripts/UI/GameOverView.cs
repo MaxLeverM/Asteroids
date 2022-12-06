@@ -11,11 +11,14 @@ namespace Asteroids.Scripts.UI
     {
         [SerializeField] private TextPatternDrawer finalScoreDrawer;
         [SerializeField] private Button againButton;
-        [SerializeField] private Player player;
         [SerializeField] private CanvasGroup canvasGroup;
 
-        private void Start()
+        private Player player;
+        
+        public void Init(Player player)
         {
+            this.player = player;
+            
             player.OnGameOver += ShowGameOverScreen;
             againButton.onClick.AddListener(ReloadScene);
         }
