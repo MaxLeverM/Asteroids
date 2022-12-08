@@ -6,18 +6,26 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.Gameplay
 {
-    public class Asteroid : MonoBehaviour, IMovableObjectHolder, IDestroyable, IRewardPoints
+    public class Asteroid : MonoBehaviour, IMovableObjectHolder, IDestroyable, IRewardPoints, IHealth
     {
         [SerializeField] private MovableSpaceObject spaceObject;
-
-        public Action<GameObject> DestroyCalled { get; set; }
+        [SerializeField] private Health health;
+        public event Action<GameObject> DestroyCalled;
+        public Health Health => health;
 
         public int Score { get; set; }
         public MovableSpaceObject MovableObject => spaceObject;
 
+
         private void Start()
         {
             spaceObject.BindTransform(transform);
+            health.OnHealthEnded += CallDestroy;
+        }
+        
+        private void OnDisable()
+        {
+            DestroyCalled = null;
         }
 
         private void FixedUpdate()

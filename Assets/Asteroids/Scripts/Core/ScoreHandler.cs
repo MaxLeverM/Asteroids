@@ -8,7 +8,7 @@ namespace Asteroids.Scripts.Core
     {
         [SerializeField] private int score;
 
-        public Action<int> OnScoreValueChanged;
+        public event Action<int> OnScoreValueChanged;
         
         public int Score
         {

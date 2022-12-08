@@ -14,9 +14,9 @@ namespace Asteroids.Scripts.Core
         [SerializeField] private float maxSpeed = 0.1f;
         private Transform transform;
 
-        public Action<Vector2> OnPositionUpdate;
-        public Action<Quaternion> OnRotationUpdate;
-        public Action<Vector2> OnVelocityUpdate;
+        public event Action<Vector2> OnPositionUpdate;
+        public event Action<Quaternion> OnRotationUpdate;
+        public event Action<Vector2> OnVelocityUpdate;
 
         public Vector2 Position
         {

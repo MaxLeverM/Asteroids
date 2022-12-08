@@ -17,8 +17,8 @@ namespace Asteroids.Scripts.Core.Starship
         private Transform holder;
         private float currentRechargeTime;
         private bool isFireActive;
-        
-        public Action<int> OnPointsAwarded { get; set; }
+
+        public event Action<int> OnPointsAwarded;
 
         private readonly Vector3 bulletContainerOffset = new Vector3(-10, 0, 0);
 
@@ -48,12 +48,12 @@ namespace Asteroids.Scripts.Core.Starship
             var movableObject = movableObjectHolder.MovableObject;
             if (movableObjectHolder is IDestroyable destroyableObject)
             {
-                destroyableObject.DestroyCalled = DestroyCalled;
+                destroyableObject.DestroyCalled += DestroyCalled;
             }
 
             if (movableObjectHolder is IScorer scorer)
             {
-                scorer.OnPointsAwarded = OnPointsAwarded;
+                scorer.OnPointsAwarded += OnPointsAwarded;
             }
 
             movableObject.Position = holder.position;

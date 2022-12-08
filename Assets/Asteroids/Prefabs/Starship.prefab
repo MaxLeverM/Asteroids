@@ -63,7 +63,8 @@ MonoBehaviour:
     maxPoolCapacity: 40
     rechargeTime: 0.15
   additionalGun:
-    shotDuration: 1
+    shotDuration: 2
+    damagePerSec: 400
     rechargeTime: 10
     maxShotCount: 3
     shotCount: 3

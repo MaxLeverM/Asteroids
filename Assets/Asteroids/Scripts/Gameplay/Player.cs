@@ -12,7 +12,7 @@ namespace Asteroids.Scripts.Gameplay
         
         public ScoreHandler ScoreHandler => scoreHandler;
 
-        public Action OnGameOver;
+        public event Action OnGameOver;
 
         private void Awake()
         {
@@ -23,7 +23,7 @@ namespace Asteroids.Scripts.Gameplay
 
             if (starship is IDestroyable destroyableStarship)
             {
-                destroyableStarship.DestroyCalled = StarshipDestroyed;
+                destroyableStarship.DestroyCalled += StarshipDestroyed;
             }
         }
 

@@ -1199,10 +1199,12 @@ MonoBehaviour:
       partsCount: 3
       velocityRange: {x: 0.05, y: 0.1}
       scoreForDestroy: 100
+      hp: 100
     - scale: {x: 0.25, y: 0.25, z: 0.25}
       partsCount: 0
       velocityRange: {x: 0.08, y: 0.13}
       scoreForDestroy: 200
+      hp: 50
   ufoSpawner:
     prefabForSpawn: {fileID: 6748213113789152209, guid: c60b312a6f970da49b7bfd02ba88dd99, type: 3}
     startCapacity: 1

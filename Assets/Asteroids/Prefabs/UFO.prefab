@@ -125,6 +125,9 @@ MonoBehaviour:
     force: 0.08
     rotationOffset: 90
   rewardForDestroy: 1000
+  health:
+    hp: 100
+    maxHp: 100
 --- !u!50 &-2672507028778704970
 Rigidbody2D:
   serializedVersion: 4

@@ -8,6 +8,7 @@ namespace Asteroids.Scripts.Core.Starship
     public class LaserGun : IGun, IScorer
     {
         [SerializeField] private float shotDuration = 1f;
+        [SerializeField] private float damagePerSec = 100f;
         [SerializeField] private float rechargeTime = 10f;
         [SerializeField] private int maxShotCount = 3;
         [SerializeField] private int shotCount = 3;
@@ -36,7 +37,7 @@ namespace Asteroids.Scripts.Core.Starship
             get => shotCount;
             set
             {
-                shotCount = value; 
+                shotCount = value;
                 OnShotCountChanged?.Invoke(shotCount);
             }
         }
@@ -50,15 +51,15 @@ namespace Asteroids.Scripts.Core.Starship
                 OnRechargeTimeChanged?.Invoke(currentRechargeTime);
             }
         }
-        
+
         public float Distance => (laserHit.distance <= 0) ? laserDistance : laserHit.distance;
         public float RechargeTime => rechargeTime;
         public int MaxShotCount => maxShotCount;
 
-        public Action<bool> OnShotStatusChanged;
-        public Action<int> OnShotCountChanged;
-        public Action<float> OnRechargeTimeChanged;
-        public Action<int> OnPointsAwarded { get; set; }
+        public event Action<bool> OnShotStatusChanged;
+        public event Action<int> OnShotCountChanged;
+        public event Action<float> OnRechargeTimeChanged;
+        public event Action<int> OnPointsAwarded;
 
 
         public void Init(Transform holderTransform)
@@ -88,13 +89,14 @@ namespace Asteroids.Scripts.Core.Starship
         private void LaserShot()
         {
             laserHit = Physics2D.Raycast(holder.position, holder.up, laserDistance, layerMask);
-            if (laserHit.transform != null && laserHit.transform.TryGetComponent(out IDestroyable destroyableEnemy))
+            if (laserHit.transform != null)
             {
-                destroyableEnemy?.CallDestroy();
-                
-                if (destroyableEnemy is IRewardPoints rewardPoints)
+                if (laserHit.transform.TryGetComponent(out IHealth enemyObject))
                 {
-                    OnPointsAwarded?.Invoke(rewardPoints.Score);
+                    if (enemyObject.Health.HP - damagePerSec * Time.fixedDeltaTime <= 0 && enemyObject is IRewardPoints rewardPoints)
+                        OnPointsAwarded?.Invoke(rewardPoints.Score);
+
+                    enemyObject.Health.Damage(damagePerSec * Time.fixedDeltaTime);
                 }
             }
 

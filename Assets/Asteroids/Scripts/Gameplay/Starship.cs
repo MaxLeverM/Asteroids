@@ -20,8 +20,8 @@ namespace Asteroids.Scripts.Gameplay
         public IGun MainGun => mainGun;
         public LaserGun AdditionalGun => additionalGun;
         public MovableSpaceObject MovableSpaceObject => movableSpaceObject;
-        public Action<int> OnPointsAwarded { get; set; }
-        public Action<GameObject> DestroyCalled { get; set; }
+        public event Action<int> OnPointsAwarded;
+        public event Action<GameObject> DestroyCalled;
 
         private void Start()
         {
@@ -40,9 +40,9 @@ namespace Asteroids.Scripts.Gameplay
         private void Subscribes()
         {
             if (mainGun is IScorer scorer)
-                scorer.OnPointsAwarded = OnPointsAwarded;
+                scorer.OnPointsAwarded += OnPointsAwarded;
             if (additionalGun is IScorer additionalGunScorer)
-                additionalGunScorer.OnPointsAwarded = OnPointsAwarded;
+                additionalGunScorer.OnPointsAwarded += OnPointsAwarded;
         }
 
         private void Update()

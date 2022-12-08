@@ -4,6 +4,6 @@ namespace Asteroids.Scripts.Core.Interfaces
 {
     public interface IScorer
     {
-        public Action<int> OnPointsAwarded { get; set; }
+        public event Action<int> OnPointsAwarded;
     }
 }

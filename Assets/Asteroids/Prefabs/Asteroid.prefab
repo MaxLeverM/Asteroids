@@ -105,6 +105,9 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0, w: 0}
     damping: 1
     maxSpeed: 0.1
+  health:
+    hp: 100
+    maxHp: 100
 --- !u!58 &2659354237369315585
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -10,10 +10,12 @@ namespace Asteroids.Scripts.Core
         [SerializeField] private int partsCount;
         [SerializeField] private Vector2 velocityRange;
         [SerializeField] private int scoreForDestroy;
+        [SerializeField] private float hp;
         
         public Vector3 Scale => scale;
         public int PartsCount => partsCount;
         public Vector2 VelocityRange => velocityRange;
         public int ScoreForDestroy => scoreForDestroy;
+        public float Hp => hp;
     }
 }

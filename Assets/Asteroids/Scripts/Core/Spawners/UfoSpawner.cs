@@ -19,8 +19,8 @@ namespace Asteroids.Scripts.Core
         private Vector2 fieldBound;
         private Transform playerShip;
 
-        private Action<IFieldObject> objectSpawned;
-        private Action<IFieldObject> objectDestroyed;
+        private event Action<IFieldObject> objectSpawned;
+        private event Action<IFieldObject> objectDestroyed;
 
         public void Init(MonoBehaviour root, Transform playerShip , Vector2 fieldBound, Action<IFieldObject> objectSpawned, Action<IFieldObject> objectDestroyed)
         {
@@ -49,12 +49,17 @@ namespace Asteroids.Scripts.Core
 
             if (movableObjectHolder is IDestroyable destroyableObject)
             {
-                destroyableObject.DestroyCalled = DestroyCalled;
+                destroyableObject.DestroyCalled += DestroyCalled;
             }
 
             if (movableObjectHolder is IEnemyAI enemyAI)
             {
                 enemyAI.SetTarget(playerShip);
+            }
+            
+            if (movableObjectHolder is IHealth healthObject)
+            {
+                healthObject.Health.HP = healthObject.Health.MaxHp;
             }
 
             movableObject.Position = spawnPoint;

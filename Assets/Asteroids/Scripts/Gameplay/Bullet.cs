@@ -11,10 +11,11 @@ namespace Asteroids.Scripts.Gameplay
         [SerializeField] private MovableSpaceObject spaceObject;
         [SerializeField] private string destroyerTag;
         [SerializeField] private float timeToDestroy = 1f;
-        
-        public Action<GameObject> DestroyCalled { get; set; }
-        public Action<int> OnPointsAwarded { get; set; }
-        
+        [SerializeField] private float damage = 100f;
+
+        public event Action<GameObject> DestroyCalled;
+        public event Action<int> OnPointsAwarded;
+
         public MovableSpaceObject MovableObject => spaceObject;
 
 
@@ -28,6 +29,12 @@ namespace Asteroids.Scripts.Gameplay
             StartCoroutine(SelfDestructionTimer());
         }
 
+        private void OnDisable()
+        {
+            DestroyCalled = null;
+            OnPointsAwarded = null;
+        }
+
         private void FixedUpdate()
         {
             spaceObject.PhysicUpdate();
@@ -37,15 +44,15 @@ namespace Asteroids.Scripts.Gameplay
         {
             if (other.CompareTag(destroyerTag))
             {
-                CallDestroy();
-                if (other.TryGetComponent(out IDestroyable destroyableObject))
+                if (other.TryGetComponent(out IHealth enemyObject))
                 {
-                    if (destroyableObject is IRewardPoints rewardPoints)
-                    {
+                    if (enemyObject.Health.HP - damage <= 0 && enemyObject is IRewardPoints rewardPoints)
                         OnPointsAwarded?.Invoke(rewardPoints.Score);
-                    }
-                    destroyableObject.CallDestroy();
+
+                    enemyObject.Health.Damage(damage);
                 }
+
+                CallDestroy();
             }
         }
 

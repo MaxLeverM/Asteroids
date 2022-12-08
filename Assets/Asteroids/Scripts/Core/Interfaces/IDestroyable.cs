@@ -5,7 +5,7 @@ namespace Asteroids.Scripts.Core.Interfaces
 {
     public interface IDestroyable
     {
-        public Action<GameObject> DestroyCalled { get; set; }
+        public event Action<GameObject> DestroyCalled;
         public void CallDestroy();
     }
 }
