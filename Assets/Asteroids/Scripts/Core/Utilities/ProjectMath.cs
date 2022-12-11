@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Asteroids.Scripts.Core
+namespace Asteroids.Scripts.Core.Utilities
 {
     public static class ProjectMath
     {
+        public static bool NearlyEqual(this float a, float b)
+        {
+            return System.Math.Abs(a - b) < float.Epsilon;
+        }
+        
         public static Vector2 RandomPointOutsideRectangle(float width, float height)
         {
             var point = Random.Range(0, width + width + height + height);

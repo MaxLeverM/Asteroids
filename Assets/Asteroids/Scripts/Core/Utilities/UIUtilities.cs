@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Asteroids.Scripts.Core
+namespace Asteroids.Scripts.Core.Utilities
 {
     public static class UIUtilities
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using Asteroids.Scripts.Core;
+using Asteroids.Scripts.Core.Gun;
 using Asteroids.Scripts.Core.Interfaces;
 using Asteroids.Scripts.Core.Starship;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Asteroids.Scripts.Gameplay
         private bool isDestroyed;
 
         public IGun MainGun => mainGun;
-        public LaserGun AdditionalGun => additionalGun;
+        public IGun AdditionalGun => additionalGun;
         public MovableSpaceObject MovableSpaceObject => movableSpaceObject;
         public event Action<int> OnPointsAwarded;
         public event Action<GameObject> DestroyCalled;

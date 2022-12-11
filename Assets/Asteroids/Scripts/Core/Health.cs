@@ -1,5 +1,5 @@
 ﻿using System;
-using Asteroids.Scripts.Core.GameMath;
+using Asteroids.Scripts.Core.Utilities;
 using UnityEngine;
 
 namespace Asteroids.Scripts.Core
@@ -16,7 +16,7 @@ namespace Asteroids.Scripts.Core
             set
             {
                 var tempHp = Math.Clamp(value, 0, maxHp);
-                if (LMath.NearlyEqual(hp, tempHp))
+                if (ProjectMath.NearlyEqual(hp, tempHp))
                     return;
                 hp = tempHp;
                 OnHealthChanged?.Invoke(hp);

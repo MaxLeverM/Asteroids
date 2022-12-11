@@ -2,7 +2,7 @@
 using Asteroids.Scripts.Core.Interfaces;
 using UnityEngine;
 
-namespace Asteroids.Scripts.Core.Starship
+namespace Asteroids.Scripts.Core.Gun
 {
     [Serializable]
     public class BulletGun : IGun, IScorer

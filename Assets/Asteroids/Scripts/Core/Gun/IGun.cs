@@ -1,4 +1,4 @@
-﻿namespace Asteroids.Scripts.Core.Interfaces
+﻿namespace Asteroids.Scripts.Core.Gun
 {
     public interface IGun
     {

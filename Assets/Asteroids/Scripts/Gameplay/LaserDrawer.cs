@@ -1,4 +1,5 @@
 ﻿using System;
+using Asteroids.Scripts.Core.Gun;
 using Asteroids.Scripts.Core.Starship;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Asteroids.Scripts.Gameplay
         private void Start()
         {
             holder = starship.transform;
-            laserGun = starship.AdditionalGun;
+            laserGun = starship.AdditionalGun as LaserGun;
             laserGun.OnShotStatusChanged += ActivateLaser;
         }
 
