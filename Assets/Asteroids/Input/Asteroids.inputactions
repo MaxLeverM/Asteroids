@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "FIreLaser",
+                    "name": "AdditionalFire",
                     "type": "Button",
                     "id": "fab05450-cfbd-4020-a928-f0dbfb8be422",
                     "expectedControlType": "Button",
@@ -116,7 +116,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FIreLaser",
+                    "action": "AdditionalFire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
