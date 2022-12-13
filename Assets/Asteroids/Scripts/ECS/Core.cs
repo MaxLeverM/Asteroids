@@ -1,11 +1,9 @@
-﻿using System;
-using Asteroids.Scripts.Core;
+﻿using Asteroids.Scripts.Core;
 using Asteroids.Scripts.ECS.Services;
 using Asteroids.Scripts.ECS.Systems;
-using Asteroids.Scripts.ECS.UnityComponents;
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Leopotam.Ecs.UnityIntegration;
 using InputSystem = Asteroids.Scripts.ECS.UnityComponents.InputSystem;
 
 namespace Asteroids.Scripts.ECS
@@ -20,8 +18,11 @@ namespace Asteroids.Scripts.ECS
         private void Start()
         {
             FieldBound fieldBound = new FieldBound();
-            
+
             _world = new EcsWorld();
+#if UNITY_EDITOR
+            EcsWorldObserver.Create (_world);
+#endif
             systems = new EcsSystems(_world);
 
             systems.Add(new PlayerInitSystem())
