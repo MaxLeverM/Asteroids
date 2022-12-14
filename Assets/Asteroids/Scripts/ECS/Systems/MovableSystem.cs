@@ -6,24 +6,25 @@ namespace Asteroids.Scripts.ECS.Systems
 {
     public class MovableSystem : IEcsRunSystem
     {
-        private EcsFilter<MovableComponent> movableFilter = null;
+        private EcsFilter<MovableComponent, TransformComponent> movableFilter = null;
         
         public void Run()
         {
             foreach (var i in movableFilter)
             {
-                ref var fieldObject = ref movableFilter.Get1(i);
+                ref var movable = ref movableFilter.Get1(i);
+                ref var transformComponent = ref movableFilter.Get2(i);
 
-                fieldObject.transform.position =
-                    (Vector2) fieldObject.transform.position + (fieldObject.velocity * Time.deltaTime);
+                transformComponent.transform.position =
+                    (Vector2) transformComponent.transform.position + (movable.velocity * Time.deltaTime);
 
-                if (fieldObject.velocity.magnitude > fieldObject.maxSpeed)
+                if (movable.velocity.magnitude > movable.maxSpeed)
                 {
-                    fieldObject.velocity.Normalize();
-                    fieldObject.velocity *= fieldObject.maxSpeed;
+                    movable.velocity.Normalize();
+                    movable.velocity *= movable.maxSpeed;
                 }
 
-                fieldObject.velocity *= fieldObject.damping;
+                movable.velocity *= movable.damping;
             }
         }
     }

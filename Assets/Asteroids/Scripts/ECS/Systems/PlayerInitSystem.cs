@@ -14,16 +14,18 @@ namespace Asteroids.Scripts.ECS.Systems
         {
             var player = _world.NewEntity();
             ref var playerComponent = ref player.Get<PlayerComponent>();
+            ref var transformComponent = ref player.Get<TransformComponent>();
             ref var movableComponent = ref player.Get<MovableComponent>();
-            ref var spaceEngineComponent = ref player.Get<SpaceEngineComponent>();
+            ref var moveEngineComponent = ref player.Get<MoveEngineComponent>();
+            ref var rotationEngineComponent = ref player.Get<RotationEngineComponent>();
 
             var spawnedStarship = GameObject.Instantiate(config.Starship, Vector3.zero, Quaternion.identity);
 
-            movableComponent.transform = spawnedStarship.transform;
+            transformComponent.transform = spawnedStarship.transform;
             movableComponent.maxSpeed = 10f;
             movableComponent.damping = 1f;
-            spaceEngineComponent.rotationOffset = 90f;
-            spaceEngineComponent.force = 10f;
+            rotationEngineComponent.rotationOffset = 90f;
+            moveEngineComponent.force = 10f;
         }
     }
 }

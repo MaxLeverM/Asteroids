@@ -7,7 +7,7 @@ namespace Asteroids.Scripts.ECS.Systems
 {
     public class FieldBorderSystem : IEcsRunSystem
     {
-        private EcsFilter<MovableComponent> movableFilter = null;
+        private EcsFilter<TransformComponent, MovableComponent> movableFilter = null;
         private FieldBound fieldBound;
         
         public void Run()

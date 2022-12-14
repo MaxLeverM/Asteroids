@@ -1,16 +1,18 @@
 ﻿using Asteroids.Scripts.Core;
+using Asteroids.Scripts.ECS.Components;
 using Asteroids.Scripts.ECS.Services;
 using Asteroids.Scripts.ECS.Systems;
+using Asteroids.Scripts.ECS.Systems.Input;
+using Asteroids.Scripts.ECS.UnityComponents;
 using Leopotam.Ecs;
 using UnityEngine;
 using Leopotam.Ecs.UnityIntegration;
-using InputSystem = Asteroids.Scripts.ECS.UnityComponents.InputSystem;
 
 namespace Asteroids.Scripts.ECS
 {
     public class Core : MonoBehaviour
     {
-        private EcsWorld _world;
+        private EcsWorld world;
         private EcsSystems systems;
         [SerializeField] private Config config;
         [SerializeField] private SceneContext sceneContext;
@@ -19,21 +21,27 @@ namespace Asteroids.Scripts.ECS
         {
             FieldBound fieldBound = new FieldBound();
 
-            _world = new EcsWorld();
+            world = new EcsWorld();
 #if UNITY_EDITOR
-            EcsWorldObserver.Create (_world);
+            EcsWorldObserver.Create (world);
 #endif
-            systems = new EcsSystems(_world);
-
+            systems = new EcsSystems(world);
+            
             systems.Add(new PlayerInitSystem())
-                .Add(new InputSystem())
-                .Add(new SpaceEngineSystem())
+                .Add(new InputMoveSystem())
+                .Add(new InputRotationSystem())
+                .Add(new InputFireSystem())
+                .Add(new InputAdditionalFireSystem())
+                .Add(new SpaceEngineRotateSystem())
+                .Add(new SpaceEngineMoveSystem())
                 .Add(new MovableSystem())
                 .Add(new FieldBorderSystem());
             
             systems.Inject(fieldBound)
                 .Inject((ISceneContext)sceneContext)
                 .Inject((IConfig)config);
+
+            systems.OneFrame<FireEvent>();
             
             systems.Init();
         }
@@ -46,7 +54,7 @@ namespace Asteroids.Scripts.ECS
         private void OnDestroy()
         {
             systems.Destroy();
-            _world.Destroy();
+            world.Destroy();
         }
     }
 }
