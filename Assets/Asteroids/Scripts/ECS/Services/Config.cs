@@ -7,7 +7,9 @@ namespace Asteroids.Scripts.ECS.Services
     public class Config : ScriptableObject, IConfig
     {
         [SerializeField] private StarshipView starshipView;
+        [SerializeField] private BulletView bulletView;
         
         public StarshipView Starship => starshipView;
+        public BulletView Bullet => bulletView;
     }
 }

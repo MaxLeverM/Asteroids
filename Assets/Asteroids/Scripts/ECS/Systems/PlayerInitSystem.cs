@@ -28,7 +28,7 @@ namespace Asteroids.Scripts.ECS.Systems
             ref var rotationEngineComponent = ref player.Get<RotationEngineComponent>();
 
             transformComponent.transform = starshipTransform;
-            movableComponent.maxSpeed = 10f;
+            movableComponent.maxSpeed = 5f;
             movableComponent.damping = 1f;
             rotationEngineComponent.rotationOffset = 90f;
             moveEngineComponent.force = 10f;
@@ -40,9 +40,11 @@ namespace Asteroids.Scripts.ECS.Systems
             ref var bulletGunComponent = ref bulletGun.Get<BulletGunComponent>();
 
             bulletGunComponent.damage = 50;
-            bulletGunComponent.velocity = 1;
-            bulletGunComponent.rechargeTime = 0.5f;
-            
+            bulletGunComponent.velocity = 7.5f;
+
+            ref var rechargeTimeComponent = ref bulletGun.Get<RechargeTimeComponent>();
+            rechargeTimeComponent.timeToRecharge = 0.1f;
+
             ref var inputMainAttackListener = ref bulletGun.Get<InputMainAttackListener>();
             ref var transformComponent = ref bulletGun.Get<TransformComponent>();
 

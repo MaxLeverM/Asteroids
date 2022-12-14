@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Config
   m_EditorClassIdentifier: 
   starshipView: {fileID: -8494637561002960346, guid: a7ca1c6d1ac510b4ca36314037cd8017, type: 3}
+  bulletView: {fileID: -8793419269355183882, guid: 27d8d6a3731d6d74a8d29b53503f8103, type: 3}

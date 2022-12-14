@@ -1,5 +1,6 @@
 ﻿using System;
 using Asteroids.Scripts.ECS.Components;
+using Asteroids.Scripts.ECS.Services;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -7,8 +8,10 @@ namespace Asteroids.Scripts.ECS.Systems
 {
     public class BulletSpawnSystem : IEcsRunSystem, IEcsInitSystem
     {
+        private EcsWorld _world;
         private GameObject bulletContainer;
-        private EcsFilter<BulletGunComponent, FireEvent, TransformComponent> fireGuns;
+        private IConfig config;
+        private EcsFilter<TransformComponent, BulletGunComponent, FireEvent> fireGuns;
 
         public void Init()
         {
@@ -19,8 +22,23 @@ namespace Asteroids.Scripts.ECS.Systems
         {
             foreach (var i in fireGuns)
             {
-                var ent = fireGuns.GetEntity(i);
-                Debug.Log("Spawn bullet");
+                ref var gunTransform = ref fireGuns.Get1(i);
+                ref var gunComponent = ref fireGuns.Get2(i);
+                
+                var bulletView = GameObject.Instantiate(config.Bullet, gunTransform.transform.position, Quaternion.identity);
+                bulletView.transform.SetParent(bulletContainer.transform);
+
+                var bullet = _world.NewEntity();
+                ref var bulletTransform = ref bullet.Get<TransformComponent>();
+                bulletTransform.transform = bulletView.transform;
+
+                ref var movable = ref bullet.Get<MovableComponent>();
+                movable.damping = 1;
+                movable.maxSpeed = 10;
+                movable.velocity = gunTransform.transform.up * gunComponent.velocity;
+
+                ref var destroyTimer = ref bullet.Get<DestroyTimeComponent>();
+                destroyTimer.timeToDestroy = 5f;
             }
         }
     }

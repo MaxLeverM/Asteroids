@@ -3,7 +3,6 @@ using Asteroids.Scripts.ECS.Components;
 using Asteroids.Scripts.ECS.Services;
 using Asteroids.Scripts.ECS.Systems;
 using Asteroids.Scripts.ECS.Systems.Input;
-using Asteroids.Scripts.ECS.UnityComponents;
 using Leopotam.Ecs;
 using UnityEngine;
 using Leopotam.Ecs.UnityIntegration;
@@ -36,13 +35,19 @@ namespace Asteroids.Scripts.ECS
                 .Add(new SpaceEngineMoveSystem())
                 .Add(new MovableSystem())
                 .Add(new FieldBorderSystem())
-                .Add(new BulletSpawnSystem());
+                .Add(new RechargeTimerSystem())
+                .Add(new RechargeFireSystem())
+                .Add(new BulletSpawnSystem())
+                .Add(new DestroyTimerSystem())
+                .Add(new DestroyTransformSystem())
+                .Add(new DestroyEntitySystem());
 
             systems.Inject(fieldBound)
                 .Inject((ISceneContext)sceneContext)
                 .Inject((IConfig)config);
 
-            systems.OneFrame<FireEvent>();
+            systems.OneFrame<FireEvent>()
+                .OneFrame<DestroyEvent>();
             
             systems.Init();
         }

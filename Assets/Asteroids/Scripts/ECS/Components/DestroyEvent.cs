@@ -2,7 +2,7 @@
 
 namespace Asteroids.Scripts.ECS.Components
 {
-    public struct InputMainAttackListener : IEcsIgnoreInFilter
+    public struct DestroyEvent : IEcsIgnoreInFilter
     {
         
     }

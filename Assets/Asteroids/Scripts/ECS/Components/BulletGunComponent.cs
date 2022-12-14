@@ -4,6 +4,5 @@
     {
         public float velocity;
         public float damage;
-        public float rechargeTime;
     }
 }

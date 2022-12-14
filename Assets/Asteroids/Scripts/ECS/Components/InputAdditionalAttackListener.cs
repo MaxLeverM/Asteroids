@@ -1,6 +1,8 @@
-﻿namespace Asteroids.Scripts.ECS.Components
+﻿using Leopotam.Ecs;
+
+namespace Asteroids.Scripts.ECS.Components
 {
-    public struct InputAdditionalAttackListener
+    public struct InputAdditionalAttackListener : IEcsIgnoreInFilter
     {
         
     }
