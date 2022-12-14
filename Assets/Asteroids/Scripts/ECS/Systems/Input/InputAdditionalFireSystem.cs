@@ -15,6 +15,7 @@ namespace Asteroids.Scripts.ECS.Systems.Input
         
         public void Init()
         {
+            playerInput = sceneContext.PlayerInput;
             sceneContext.PlayerInput.onActionTriggered += ReadAction;
             additionalFireAction = playerInput.currentActionMap.FindAction(InputConstants.AdditionalFire);
         }

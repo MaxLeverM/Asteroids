@@ -35,8 +35,9 @@ namespace Asteroids.Scripts.ECS
                 .Add(new SpaceEngineRotateSystem())
                 .Add(new SpaceEngineMoveSystem())
                 .Add(new MovableSystem())
-                .Add(new FieldBorderSystem());
-            
+                .Add(new FieldBorderSystem())
+                .Add(new BulletSpawnSystem());
+
             systems.Inject(fieldBound)
                 .Inject((ISceneContext)sceneContext)
                 .Inject((IConfig)config);

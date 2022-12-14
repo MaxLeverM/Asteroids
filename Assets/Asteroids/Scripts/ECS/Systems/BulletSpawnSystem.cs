@@ -8,7 +8,7 @@ namespace Asteroids.Scripts.ECS.Systems
     public class BulletSpawnSystem : IEcsRunSystem, IEcsInitSystem
     {
         private GameObject bulletContainer;
-        private EcsFilter<BulletGunComponent, FireEvent> firedGuns;
+        private EcsFilter<BulletGunComponent, FireEvent, TransformComponent> fireGuns;
 
         public void Init()
         {
@@ -17,10 +17,10 @@ namespace Asteroids.Scripts.ECS.Systems
 
         public void Run()
         {
-            foreach (var i in firedGuns)
+            foreach (var i in fireGuns)
             {
-                var ent = firedGuns.GetEntity(i);
-                
+                var ent = fireGuns.GetEntity(i);
+                Debug.Log("Spawn bullet");
             }
         }
     }

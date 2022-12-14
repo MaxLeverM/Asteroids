@@ -9,8 +9,16 @@ namespace Asteroids.Scripts.ECS.Systems
     {
         private EcsWorld _world;
         private IConfig config;
-        
+
         public void Init()
+        {
+            var spawnedStarship = GameObject.Instantiate(config.Starship, Vector3.zero, Quaternion.identity);
+
+            CreateStarshipEntity(spawnedStarship.transform);
+            CreateBulletGun(spawnedStarship.transform);
+        }
+
+        private void CreateStarshipEntity(Transform starshipTransform)
         {
             var player = _world.NewEntity();
             ref var playerComponent = ref player.Get<PlayerComponent>();
@@ -19,13 +27,26 @@ namespace Asteroids.Scripts.ECS.Systems
             ref var moveEngineComponent = ref player.Get<MoveEngineComponent>();
             ref var rotationEngineComponent = ref player.Get<RotationEngineComponent>();
 
-            var spawnedStarship = GameObject.Instantiate(config.Starship, Vector3.zero, Quaternion.identity);
-
-            transformComponent.transform = spawnedStarship.transform;
+            transformComponent.transform = starshipTransform;
             movableComponent.maxSpeed = 10f;
             movableComponent.damping = 1f;
             rotationEngineComponent.rotationOffset = 90f;
             moveEngineComponent.force = 10f;
+        }
+
+        private void CreateBulletGun(Transform bulletGunTransform)
+        {
+            var bulletGun = _world.NewEntity();
+            ref var bulletGunComponent = ref bulletGun.Get<BulletGunComponent>();
+
+            bulletGunComponent.damage = 50;
+            bulletGunComponent.velocity = 1;
+            bulletGunComponent.rechargeTime = 0.5f;
+            
+            ref var inputMainAttackListener = ref bulletGun.Get<InputMainAttackListener>();
+            ref var transformComponent = ref bulletGun.Get<TransformComponent>();
+
+            transformComponent.transform = bulletGunTransform;
         }
     }
 }
