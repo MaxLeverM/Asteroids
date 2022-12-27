@@ -1,12 +1,16 @@
-﻿using Asteroids.Scripts.ECS.Components;
+﻿using System;
+using Asteroids.Scripts.ECS.Components;
+using Asteroids.Scripts.ECS.ObjectPool;
+using Asteroids.Scripts.ECS.UnityComponents;
 using Leopotam.Ecs;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Asteroids.Scripts.ECS.Systems
 {
     public class DestroyTransformSystem : IEcsRunSystem
     {
-        private EcsFilter<TransformComponent, DestroyEvent> destroyFilter;
+        private EcsFilter<TransformComponent, DestroyEvent>.Exclude<PoolObject<AsteroidView>> destroyFilter;
 
         public void Run()
         {

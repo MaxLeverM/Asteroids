@@ -76,6 +76,7 @@ namespace Asteroids.Scripts.ECS.Systems
             asteroidView.transform.SetParent(root);
 
             var asteroid = _world.NewEntity();
+            asteroidView.Entity = asteroid;
             
             ref var asteroidTransform = ref asteroid.Get<TransformComponent>();
             asteroidTransform.transform = asteroidView.transform;
@@ -96,6 +97,10 @@ namespace Asteroids.Scripts.ECS.Systems
 
             ref var collider = ref asteroid.Get<Collider2DComponent>();
             collider.Collider = asteroidView.AsteroidCollider;
+
+            ref var poolObject = ref asteroid.Get<PoolObject<AsteroidView>>();
+            poolObject.poolObject = asteroidView;
+            poolObject.pool = asteroidPool;
         }
     }
 }

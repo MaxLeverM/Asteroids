@@ -2,7 +2,7 @@
 
 namespace Asteroids.Scripts.ECS.UnityComponents
 {
-    public class StarshipView : MonoBehaviour
+    public class StarshipView : BaseView
     {
         
     }

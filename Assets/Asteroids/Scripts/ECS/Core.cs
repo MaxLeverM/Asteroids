@@ -1,8 +1,12 @@
 ﻿using Asteroids.Scripts.Core;
 using Asteroids.Scripts.ECS.Components;
+using Asteroids.Scripts.ECS.Destroy;
+using Asteroids.Scripts.ECS.ObjectPool;
 using Asteroids.Scripts.ECS.Services;
 using Asteroids.Scripts.ECS.Systems;
 using Asteroids.Scripts.ECS.Systems.Input;
+using Asteroids.Scripts.ECS.UnityComponents;
+using LeoEcsPhysics;
 using Leopotam.Ecs;
 using UnityEngine;
 using Leopotam.Ecs.UnityIntegration;
@@ -26,6 +30,8 @@ namespace Asteroids.Scripts.ECS
 #endif
             systems = new EcsSystems(world);
             
+            EcsPhysicsEvents.ecsWorld = world;
+            
             systems.Add(new PlayerInitSystem())
                 .Add(new AsteroidPoolCreatorSystem())
                 .Add(new InputMoveSystem())
@@ -41,7 +47,14 @@ namespace Asteroids.Scripts.ECS
                 .Add(new RechargeTimerSystem())
                 .Add(new RechargeFireSystem())
                 .Add(new BulletSpawnSystem())
+                
+                .Add(new DestroyOnCollideSystem())
+                .Add(new DamageSystem())
+                
+                .Add(new HealthLostSystem())
                 .Add(new DestroyTimerSystem())
+                
+                .Add(new ReleasePoolObjectSystem<AsteroidView>())
                 .Add(new DestroyTransformSystem())
                 .Add(new DestroyEntitySystem());
 
@@ -50,7 +63,10 @@ namespace Asteroids.Scripts.ECS
                 .Inject((IConfig)config);
 
             systems.OneFrame<FireEvent>()
+               // .OneFrame<OnTriggerEnter2DEvent>()
                 .OneFrame<DestroyEvent>();
+
+            systems.OneFramePhysics2D(); //its not working.... fixed
             
             systems.Init();
         }
@@ -62,8 +78,11 @@ namespace Asteroids.Scripts.ECS
 
         private void OnDestroy()
         {
+            EcsPhysicsEvents.ecsWorld = null;
             systems.Destroy();
+            systems = null;
             world.Destroy();
+            world = null;
         }
     }
 }

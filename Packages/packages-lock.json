@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "16f527e942e4c03efabff357d718c4ba0092a477"
     },
+    "com.supremestranger.leoecs-physics": {
+      "version": "https://github.com/supremestranger/leoecs-physics.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ff384183af74c74a865444a55967af549815df69"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.6",
       "depth": 1,

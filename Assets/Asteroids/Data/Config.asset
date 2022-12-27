@@ -16,8 +16,8 @@ MonoBehaviour:
   bulletView: {fileID: -8793419269355183882, guid: 27d8d6a3731d6d74a8d29b53503f8103, type: 3}
   asteroidSpawnerConfig:
     prefabForSpawn: {fileID: 2237988663519795485, guid: b230da106a136bc48a0e0cd41b855961, type: 3}
-    startCapacity: 20
-    maxCapacity: 30
+    startCapacity: 10
+    maxCapacity: 10
     spawnInterval: {x: 5, y: 10}
     asteroidSpawnData:
     - scale: {x: 0.5, y: 0.5, z: 0.5}

@@ -2,7 +2,7 @@
 
 namespace Asteroids.Scripts.ECS.UnityComponents
 {
-    public class AsteroidView : MonoBehaviour
+    public class AsteroidView : BaseView
     {
         [SerializeField] private CircleCollider2D asteroidCollider;
 
