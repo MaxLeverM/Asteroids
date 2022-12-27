@@ -1,6 +1,6 @@
 ﻿namespace Asteroids.Scripts.ECS.Components
 {
-    public struct DamageComponent
+    public struct Damage
     {
         public float damage;
     }

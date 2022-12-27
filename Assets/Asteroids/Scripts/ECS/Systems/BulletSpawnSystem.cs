@@ -3,6 +3,7 @@ using Asteroids.Scripts.ECS.Components;
 using Asteroids.Scripts.ECS.Services;
 using Leopotam.Ecs;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Asteroids.Scripts.ECS.Systems
 {
@@ -25,7 +26,7 @@ namespace Asteroids.Scripts.ECS.Systems
                 ref var gunTransform = ref fireGuns.Get1(i);
                 ref var gunComponent = ref fireGuns.Get2(i);
                 
-                var bulletView = GameObject.Instantiate(config.Bullet, gunTransform.transform.position, Quaternion.identity);
+                var bulletView = Object.Instantiate(config.Bullet, gunTransform.transform.position, Quaternion.identity);
                 bulletView.transform.SetParent(bulletContainer.transform);
 
                 var bullet = _world.NewEntity();
@@ -39,6 +40,12 @@ namespace Asteroids.Scripts.ECS.Systems
 
                 ref var destroyTimer = ref bullet.Get<DestroyTimeComponent>();
                 destroyTimer.timeToDestroy = 5f;
+
+                ref var damage = ref bullet.Get<Damage>();
+                damage.damage = 100f;
+
+                ref var collider2D = ref bullet.Get<Collider2DComponent>();
+                collider2D.Collider = bulletView.BulletCollider;
             }
         }
     }

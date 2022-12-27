@@ -7,5 +7,6 @@ namespace Asteroids.Scripts.ECS.Services
     {
         public StarshipView Starship { get; }
         public BulletView Bullet { get; }
+        public AsteroidSpawnerConfig AsteroidSpawnerConfig { get; }
     }
 }

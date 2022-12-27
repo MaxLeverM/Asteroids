@@ -8,8 +8,10 @@ namespace Asteroids.Scripts.ECS.Services
     {
         [SerializeField] private StarshipView starshipView;
         [SerializeField] private BulletView bulletView;
+        [SerializeField] private AsteroidSpawnerConfig asteroidSpawnerConfig;
         
         public StarshipView Starship => starshipView;
         public BulletView Bullet => bulletView;
+        public AsteroidSpawnerConfig AsteroidSpawnerConfig => asteroidSpawnerConfig;
     }
 }

@@ -27,10 +27,13 @@ namespace Asteroids.Scripts.ECS
             systems = new EcsSystems(world);
             
             systems.Add(new PlayerInitSystem())
+                .Add(new AsteroidPoolCreatorSystem())
                 .Add(new InputMoveSystem())
                 .Add(new InputRotationSystem())
                 .Add(new InputFireSystem())
                 .Add(new InputAdditionalFireSystem())
+                .Add(new AsteroidSpawnSystem())
+                
                 .Add(new SpaceEngineRotateSystem())
                 .Add(new SpaceEngineMoveSystem())
                 .Add(new MovableSystem())

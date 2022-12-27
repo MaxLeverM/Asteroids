@@ -9,13 +9,16 @@ namespace Asteroids.Scripts.ECS.Systems
     {
         private EcsFilter<TransformComponent, MovableComponent> movableFilter = null;
         private FieldBound fieldBound;
-        
+
         public void Run()
         {
             foreach (var i in movableFilter)
             {
                 ref var fieldObject = ref movableFilter.Get1(i);
-               // var position = fieldObject.transform.position;
+
+              //  if (Mathf.Abs(fieldObject.transform.position.x) <= fieldBound.ExtremePoint.x &&
+                //    Mathf.Abs(fieldObject.transform.position.y) <= fieldBound.ExtremePoint.y) continue;
+                
                 if (fieldObject.transform.position.x > fieldBound.ExtremePoint.x)
                     fieldObject.transform.position = new Vector2(-fieldBound.ExtremePoint.x, fieldObject.transform.position.y);
                 if (fieldObject.transform.position.x < -fieldBound.ExtremePoint.x)
