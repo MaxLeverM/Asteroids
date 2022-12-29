@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5870135538356494333}
   - component: {fileID: 7709126787694990114}
   - component: {fileID: -8494637561002960346}
+  - component: {fileID: -8279348670765611438}
   m_Layer: 0
   m_Name: Starship 1
   m_TagString: Player
@@ -113,6 +114,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4ce9b8c8c6e4219ac73e97a73a2e4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8279348670765611438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5870135538356494328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76197cb63d544f5d958f25b6da28fac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2275333569017309751

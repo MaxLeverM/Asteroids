@@ -1,7 +1,7 @@
 ﻿namespace Asteroids.Scripts.ECS.Components
 {
-    public struct Score
+    public struct ScoreReward
     {
-        public float points;
+        public int points;
     }
 }

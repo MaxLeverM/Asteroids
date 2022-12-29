@@ -17,16 +17,18 @@ MonoBehaviour:
   asteroidSpawnerConfig:
     prefabForSpawn: {fileID: 2237988663519795485, guid: b230da106a136bc48a0e0cd41b855961, type: 3}
     startCapacity: 10
-    maxCapacity: 10
+    maxCapacity: 60
     spawnInterval: {x: 5, y: 10}
     asteroidSpawnData:
-    - scale: {x: 0.5, y: 0.5, z: 0.5}
+    - id: 0
+      scale: {x: 0.5, y: 0.5, z: 0.5}
       partsCount: 3
       velocityRange: {x: 0.5, y: 1}
       scoreForDestroy: 100
       hp: 100
-    - scale: {x: 0.25, y: 0.25, z: 0.25}
+    - id: 0
+      scale: {x: 0.25, y: 0.25, z: 0.25}
       partsCount: 0
-      velocityRange: {x: 0.8, y: 1.3}
+      velocityRange: {x: 1.3, y: 2}
       scoreForDestroy: 200
       hp: 50

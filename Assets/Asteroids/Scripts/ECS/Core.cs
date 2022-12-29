@@ -5,7 +5,10 @@ using Asteroids.Scripts.ECS.ObjectPool;
 using Asteroids.Scripts.ECS.Services;
 using Asteroids.Scripts.ECS.Systems;
 using Asteroids.Scripts.ECS.Systems.Input;
+using Asteroids.Scripts.ECS.UI;
 using Asteroids.Scripts.ECS.UnityComponents;
+using Asteroids.Scripts.ECS.Weapons;
+using Asteroids.Scripts.UI;
 using LeoEcsPhysics;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -19,6 +22,7 @@ namespace Asteroids.Scripts.ECS
         private EcsSystems systems;
         [SerializeField] private Config config;
         [SerializeField] private SceneContext sceneContext;
+        [SerializeField] private UIMediator uiMediator;
         
         private void Start()
         {
@@ -34,10 +38,13 @@ namespace Asteroids.Scripts.ECS
             
             systems.Add(new PlayerInitSystem())
                 .Add(new AsteroidPoolCreatorSystem())
+                .Add(new BulletPoolCreatorSystem())
                 .Add(new InputMoveSystem())
                 .Add(new InputRotationSystem())
                 .Add(new InputFireSystem())
                 .Add(new InputAdditionalFireSystem())
+                
+                .Add(new AsteroidSpawnByTimerSystem())
                 .Add(new AsteroidSpawnSystem())
                 
                 .Add(new SpaceEngineRotateSystem())
@@ -53,14 +60,23 @@ namespace Asteroids.Scripts.ECS
                 
                 .Add(new HealthLostSystem())
                 .Add(new DestroyTimerSystem())
+                .Add(new ScoreSystem())
                 
-                .Add(new ReleasePoolObjectSystem<AsteroidView>())
+                .Add(new AsteroidDividerSystem())
+                
+                .Add(new PlayerDestroyHandlerSystem())
+                
+                .Add(new DestroyTagChildSystem())
+                .Add(new ReleasePoolObjectSystem())
                 .Add(new DestroyTransformSystem())
-                .Add(new DestroyEntitySystem());
-
+                .Add(new DestroyEntitySystem())
+                
+                .Add(new UIPlayerStatisticSystem());
+            
             systems.Inject(fieldBound)
                 .Inject((ISceneContext)sceneContext)
-                .Inject((IConfig)config);
+                .Inject((IConfig)config)
+                .Inject(uiMediator);
 
             systems.OneFrame<FireEvent>()
                // .OneFrame<OnTriggerEnter2DEvent>()

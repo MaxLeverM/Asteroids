@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Asteroids.Scripts.ECS.UnityComponents;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Asteroids.Scripts.ECS.ObjectPool
 {
-    public struct PoolObject<T> where T: MonoBehaviour
+    public struct PoolObject
     {
-        public T poolObject;
-        public ObjectPool<T> pool;
+        public BaseView poolObject;
+        public ObjectPool<BaseView> pool;
     }
 }

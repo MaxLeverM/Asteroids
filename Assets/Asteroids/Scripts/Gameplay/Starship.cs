@@ -19,7 +19,7 @@ namespace Asteroids.Scripts.Gameplay
         private bool isDestroyed;
 
         public IGun MainGun => mainGun;
-        public IGun AdditionalGun => additionalGun;
+        public LaserGun AdditionalGun => additionalGun;
         public MovableSpaceObject MovableSpaceObject => movableSpaceObject;
         public event Action<int> OnPointsAwarded;
         public event Action<GameObject> DestroyCalled;

@@ -21,9 +21,11 @@ namespace Asteroids.Scripts.ECS.Systems
             
             ref var rootTransform = ref asteroidPoolEntity.Get<TransformComponent>();
             rootTransform.transform = container.transform;
+
+            asteroidPoolEntity.Get<PoolType<AsteroidView>>();
             
-            ref var poolComponent = ref asteroidPoolEntity.Get<PoolComponent<AsteroidView>>();
-            poolComponent.ObjectPool = new GameObjectPool<AsteroidView>(spawnerConfig.PrefabForSpawn,
+            ref var poolComponent = ref asteroidPoolEntity.Get<PoolComponent>();
+            poolComponent.ViewPool = new GameViewPool(spawnerConfig.PrefabForSpawn,
                 rootTransform.transform, spawnerConfig.StartCapacity, spawnerConfig.MaxCapacity);
 
             ref var timer = ref asteroidPoolEntity.Get<SpawnTimer>();

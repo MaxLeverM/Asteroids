@@ -10,7 +10,7 @@ namespace Asteroids.Scripts.ECS.Systems
 {
     public class DestroyTransformSystem : IEcsRunSystem
     {
-        private EcsFilter<TransformComponent, DestroyEvent>.Exclude<PoolObject<AsteroidView>> destroyFilter;
+        private EcsFilter<TransformComponent, DestroyEvent>.Exclude<PoolObject> destroyFilter;
 
         public void Run()
         {

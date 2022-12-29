@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Asteroids.Scripts.ECS.ObjectPool
 {
-    public class ReleasePoolObjectSystem<T> : IEcsRunSystem where T : MonoBehaviour
+    public class ReleasePoolObjectSystem : IEcsRunSystem
     {
-        private EcsFilter<PoolObject<T>, DestroyEvent> destroyFilter;
+        private EcsFilter<PoolObject, DestroyEvent> destroyFilter;
 
         public void Run()
         {

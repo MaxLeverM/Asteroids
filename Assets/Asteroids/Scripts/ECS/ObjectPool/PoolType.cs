@@ -2,8 +2,8 @@
 
 namespace Asteroids.Scripts.ECS.ObjectPool
 {
-    public struct PoolComponent
+    public struct PoolType<T> where T: MonoBehaviour
     {
-        public GameViewPool ViewPool;
+        
     }
 }

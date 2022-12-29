@@ -767,6 +767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: d169d6695b9ad5f468b22799cad9cd48, type: 2}
   sceneContext: {fileID: 740232634}
+  uiMediator: {fileID: 1948821663}
 --- !u!4 &740232633
 Transform:
   m_ObjectHideFlags: 0
@@ -2014,7 +2015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1948821659
 MonoBehaviour:
   m_ObjectHideFlags: 0

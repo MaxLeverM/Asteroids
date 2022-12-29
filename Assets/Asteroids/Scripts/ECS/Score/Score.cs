@@ -1,6 +1,7 @@
 ﻿namespace Asteroids.Scripts.ECS.Components
 {
-    public struct PlayerComponent
+    public struct Score
     {
+        public int score;
     }
 }

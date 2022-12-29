@@ -14,19 +14,14 @@ namespace Asteroids.Scripts.UI
         [SerializeField] private Button againButton;
         [SerializeField] private CanvasGroup canvasGroup;
 
-        private Player player;
-        
-        public void Init(Player player)
+        private void Start()
         {
-            this.player = player;
-            
-            player.OnGameOver += ShowGameOverScreen;
             againButton.onClick.AddListener(ReloadScene);
         }
 
-        private void ShowGameOverScreen()
+        public void ShowGameOverScreen(int score)
         {
-            finalScoreDrawer.Draw(player.ScoreHandler.Score);
+            finalScoreDrawer.Draw(score);
             canvasGroup.Active(true);
         }
 
