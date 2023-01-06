@@ -1,7 +1,7 @@
 ﻿namespace Asteroids.Scripts.ECS.Components
 {
-    public struct PlayerComponent
+    public struct LivesComponent
     {
-        
+        public int count;
     }
 }

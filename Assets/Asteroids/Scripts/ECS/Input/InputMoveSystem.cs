@@ -13,7 +13,7 @@ namespace Asteroids.Scripts.ECS.Systems.Input
         private InputAction moveAction;
         private bool isMovePressed;
         
-        private EcsFilter<PlayerComponent, MoveEngineComponent, TransformComponent> playerEngineFilter;
+        private EcsFilter<PlayerControlledComponent, MoveEngineComponent, TransformComponent> playerEngineFilter;
 
         public void Init()
         {

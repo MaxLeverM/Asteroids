@@ -26,7 +26,7 @@ namespace Asteroids.Scripts.ECS
         
         private void Start()
         {
-            FieldBound fieldBound = new FieldBound();
+            var fieldBound = new FieldBound();
 
             world = new EcsWorld();
 #if UNITY_EDITOR
@@ -51,11 +51,13 @@ namespace Asteroids.Scripts.ECS
                 .Add(new SpaceEngineMoveSystem())
                 .Add(new MovableSystem())
                 .Add(new FieldBorderSystem())
+                
                 .Add(new RechargeTimerSystem())
                 .Add(new RechargeFireSystem())
                 .Add(new BulletSpawnSystem())
                 
                 .Add(new DestroyOnCollideSystem())
+                .Add(new CollisionDamageSystem())
                 .Add(new DamageSystem())
                 
                 .Add(new HealthLostSystem())
@@ -71,15 +73,17 @@ namespace Asteroids.Scripts.ECS
                 .Add(new DestroyTransformSystem())
                 .Add(new DestroyEntitySystem())
                 
-                .Add(new UIPlayerStatisticSystem());
-            
+                .Add(new UIStarshipStatisticSystem())
+                .Add(new UIPlayerStatisticSystem())
+                .Add(new UIGameOverScreenSystem());
+
             systems.Inject(fieldBound)
                 .Inject((ISceneContext)sceneContext)
                 .Inject((IConfig)config)
                 .Inject(uiMediator);
 
             systems.OneFrame<FireEvent>()
-               // .OneFrame<OnTriggerEnter2DEvent>()
+                .OneFrame<GameOverEvent>()
                 .OneFrame<DestroyEvent>();
 
             systems.OneFramePhysics2D(); //its not working.... fixed

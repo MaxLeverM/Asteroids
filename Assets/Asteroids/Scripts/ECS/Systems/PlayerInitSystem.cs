@@ -16,6 +16,7 @@ namespace Asteroids.Scripts.ECS.Systems
         {
             var spawnedStarship = GameObject.Instantiate(config.Starship, Vector3.zero, Quaternion.identity);
 
+            var player = CreatePlayer();
             var starship = CreateStarshipEntity(spawnedStarship.transform, spawnedStarship);
             var bulletGun = CreateBulletGun(spawnedStarship.transform);
             
@@ -23,23 +24,36 @@ namespace Asteroids.Scripts.ECS.Systems
             child.children = new List<EcsEntity>();
             child.children.Add(bulletGun);
 
-            ref var owner = ref bulletGun.Get<Owner>();
-            owner.master = starship;
+            ref var starshipOwner = ref starship.Get<Owner>();
+            starshipOwner.master = player;
+            ref var bulletGunOwner = ref bulletGun.Get<Owner>();
+            bulletGunOwner.master = player;
+        }
+
+        private EcsEntity CreatePlayer()
+        {
+            var player = _world.NewEntity();
+            ref var playerComponent = ref player.Get<PlayerComponent>();
+            ref var nameComponent = ref player.Get<NameComponent>();
+            nameComponent.name = "Player1";
+            ref var scoreComponent = ref player.Get<Score>();
+            ref var livesComponent = ref player.Get<LivesComponent>();
+            livesComponent.count = 3;
+            return player;
         }
 
         private EcsEntity CreateStarshipEntity(Transform starshipTransform, BaseView view)
         {
-            var player = _world.NewEntity();
-            ref var playerComponent = ref player.Get<PlayerComponent>();
-            ref var transformComponent = ref player.Get<TransformComponent>();
-            ref var movableComponent = ref player.Get<MovableComponent>();
-            ref var moveEngineComponent = ref player.Get<MoveEngineComponent>();
-            ref var rotationEngineComponent = ref player.Get<RotationEngineComponent>();
-            ref var health = ref player.Get<HealthComponent>();
-            ref var team = ref player.Get<TeamComponent>();
-            player.Get<Score>();
+            var starship = _world.NewEntity();
+            ref var playerComponent = ref starship.Get<PlayerControlledComponent>();
+            ref var transformComponent = ref starship.Get<TransformComponent>();
+            ref var movableComponent = ref starship.Get<MovableComponent>();
+            ref var moveEngineComponent = ref starship.Get<MoveEngineComponent>();
+            ref var rotationEngineComponent = ref starship.Get<RotationEngineComponent>();
+            ref var health = ref starship.Get<HealthComponent>();
+            ref var team = ref starship.Get<TeamComponent>();
 
-            view.Entity = player;
+            view.Entity = starship;
             transformComponent.transform = starshipTransform;
             movableComponent.maxSpeed = 5f;
             movableComponent.damping = 1f;
@@ -48,7 +62,7 @@ namespace Asteroids.Scripts.ECS.Systems
             health.hp = 100f;
             health.maxHp = 100f;
             team.team = TeamID.Player;
-            return player;
+            return starship;
         }
 
         private EcsEntity CreateBulletGun(Transform bulletGunTransform)

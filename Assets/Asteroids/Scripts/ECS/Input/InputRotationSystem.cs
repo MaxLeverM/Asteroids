@@ -13,7 +13,7 @@ namespace Asteroids.Scripts.ECS.Systems.Input
         private PlayerInput playerInput;
         private InputAction rotateAction;
         
-        private EcsFilter<PlayerComponent, RotationEngineComponent> playerEngineFilter;
+        private EcsFilter<PlayerControlledComponent, RotationEngineComponent> playerEngineFilter;
         
         public void Init()
         {
